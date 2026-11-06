@@ -6,6 +6,8 @@ All notable changes to the standards are listed here. The format follows
 
 ## [Unreleased]
 
+## [2.0.0] - 2026-11-06
+
 ### Added
 
 - `standards/specification-layout-and-lifecycle.md`: every feature has a
