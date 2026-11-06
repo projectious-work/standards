@@ -439,7 +439,7 @@ The local deployment command:
 
 `gh-pages` contains generated output only and is never a development or review
 branch. Its documented replacement/force-push behavior is a narrow exception
-to the company prohibition on rewriting `main` and `lts/*`. Never edit
+to the company prohibition on rewriting `main`, `lts/*`, and `release/*`. Never edit
 the branch by hand. The deploy command must not expose authentication tokens in
 arguments, logs, generated files, or Git history.
 

@@ -55,7 +55,7 @@ not redefine the standard fields or statuses.
 - `done`: the item meets its *Definition of Done*, which is: agreed scope
   implemented and merged into `main` (or its `lts/*` line); verification passes
   without unexplained skips; specification, conformance matrix (where one
-  exists), and version-appropriate documentation agree; development evidence is
+  exists, it MUST be accepted), and version-appropriate documentation agree; development evidence is
   complete. Items built through the
   [spec-driven cycle](spec-driven-development-cycle.md#10-complete-phase-evidence)
   also meet its §10 list. Publication and release-wide gates may still be

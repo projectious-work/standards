@@ -226,7 +226,7 @@ documentation server does not satisfy operational agent-interface acceptance.
 
 > Keep probabilistic reasoning apart from deterministic validation, authority,
 > mutation, recovery, and evidence. MCP and CLI are peer adapters over one
-> *Hexagonal Architecture* core; the CLI stays a full recovery path. Tools have
-> strict versioned schemas, no shell, typed results. Natural language, model
-> confidence, and client confirmation are never approval; no self-approval; no
-> secrets in output. Mutations: idempotent or durable; partial failure reported.
+> *Hexagonal Architecture* core; the CLI is a full recovery path. Tools: strict
+> versioned schemas, no shell, typed results, safe next actions. Language, model
+> confidence, client confirmation: never identity or approval; no self-approval
+> or secrets in output. Mutations idempotent or durable; partial failure reported.

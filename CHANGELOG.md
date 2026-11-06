@@ -14,6 +14,8 @@ All notable changes to the standards are listed here. The format follows
   SemVer; no secret in any configuration layer; side-effect-free MCP tools are
   outside the agent-native standard; stdio MCP servers log to stderr; the
   execution budget no longer assumes CI.
+- A final release may differ from its last accepted release candidate only in
+  version metadata and changelog (previously: not silently).
 - Added the MCP server application profile and a conventions section
   (Semantic Anchors pin, RFC 2119 keywords, briefings) in `standards/README.md`;
   every standard using anchors points to it.

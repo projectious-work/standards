@@ -180,7 +180,8 @@ supported contract versions.
 
 ## Release record
 
-The release record includes source SHA, target branches, intended version,
+The release record includes the release-branch commit, squash commit, tag,
+approved tree, target branches, intended version,
 approvals, checks, tool versions, artifacts, hashes, warnings, and
 post-publication verification. Warnings requiring judgment are acknowledged
 explicitly; release gates fail closed on errors.
