@@ -6,6 +6,9 @@ This standard defines how projectious.work software projects express future
 direction and connect completed and released outcomes to implementation evidence.
 It applies once a project discusses future work beyond the current release.
 
+Terms in *italics* are [Semantic Anchors](https://github.com/llm-coding/Semantic-Anchors/tree/ccb05b6bd41a663eaf2595e707d98f35d743e61f); see
+[README](README.md#conventions).
+
 The canonical roadmap MUST be machine-readable YAML in `roadmap.yaml`, or at a
 documented project-specific path. A rendered website or Markdown roadmap MAY be
 generated from it, but MUST NOT become a competing source of truth.
@@ -37,7 +40,7 @@ phases with these fields:
 | `decisions` | Optional governing decision references. |
 | `specs` | Frozen `<slug>@v<N>` versions defining the item; a phase lists its features' versions. Required before `in_progress`. |
 | `devNote` | Required when a non-trivial item becomes `done`; retained when released. |
-| `release` | Required for `released`; names a published release containing the outcome. |
+| `release` | Required for `released`; the published release tag (`vX.Y.Z`) containing the outcome. |
 | `rationale` | Required for `cancelled` unless `decisions` gives the reason. |
 
 Projects MAY extend this model with product-specific fields. Extensions MUST
@@ -52,19 +55,25 @@ not redefine the standard fields or statuses.
 - `done`: the item meets its *Definition of Done*, which is: agreed scope
   implemented and merged into `main` (or its `lts/*` line); verification passes
   without unexplained skips; specification, conformance matrix (where one
-  exists), and version-appropriate documentation agree; development evidence is
-  complete. Publication and release-wide gates may still be pending.
+  exists, it MUST be accepted), and version-appropriate documentation agree; development evidence is
+  complete. Items built through the
+  [spec-driven cycle](spec-driven-development-cycle.md#10-complete-phase-evidence)
+  also meet its §10 list. Publication and release-wide gates may still be
+  pending.
 - `released`: available in the named published release and supported by conformance
   evidence, documentation, and a development note when required.
 - `cancelled`: intentionally not proceeding; rationale or a decision reference
   is present.
 
 The normal progression is `planned` → `in_progress` → `done` → `released`.
-Changing an item to `done` requires agreement between its accepted scope, code,
-tests, specification where present, version-appropriate documentation, and
-development evidence. Where a conformance matrix exists, it MUST be accepted.
-Merging code alone is insufficient. Incomplete item-level
-acceptance remains `in_progress`; a pending release alone does not.
+Merging code alone is insufficient. Incomplete item-level acceptance remains
+`in_progress`; a pending release alone does not.
+
+Statuses record facts that already hold. `done` is set by a separate `chore/`
+pull request after the item's merge commit is verified; `released` (with
+`release: vX.Y.Z`) is set by a separate `chore/` pull request after
+publication and post-publication verification. A prerelease does not make an
+item `released`.
 
 Changing an item to `released` additionally requires the applicable release gates,
 publication, and release evidence. Several dependent items MAY become `done`
@@ -123,7 +132,7 @@ and references to absent development notes. Generated
 roadmap pages MUST be reproducible locally and checked for drift.
 
 Schema status enums, evidence conditions, validators, and renderers MUST support
-`done` together. During migration, validators MAY read the former status
+`done` and `released` together. During migration, validators MAY read the former status
 `shipped` as `released`; afterwards they reject it. Adoption MUST NOT
 bulk-promote existing items: reconcile each status against implementation and
 release evidence.
@@ -140,7 +149,7 @@ groups:
         title: Guided first upload
         summary: New users upload and classify their first document without help.
         status: released
-        release: 2.4.0
+        release: v2.4.0
         issues: [PROJ-101]
         specs: [guided-first-upload@v1]
         devNote: dev-notes/RM-12-guided-first-upload.md
@@ -148,6 +157,7 @@ groups:
         title: Bulk import
         summary: Users import a whole folder in one step.
         status: in_progress
+        specs: [bulk-import@v1]
         dependencies: [RM-12]
         target: 2.6.0
       - id: RM-20

@@ -6,6 +6,9 @@ This standard defines how AI agents shape what they tell people in every
 projectious.work repository and harness. It is the company default for every
 agent and every person; nobody needs to opt in.
 
+Terms in *italics* are [Semantic Anchors](https://github.com/llm-coding/Semantic-Anchors/tree/ccb05b6bd41a663eaf2595e707d98f35d743e61f); see
+[README](README.md#conventions).
+
 The reader is assumed to have little working memory to spare and to be switching
 context often. Output must therefore be easy to act on, not just short.
 
@@ -120,14 +123,14 @@ adopt.
 ## Agent briefing
 
 > *BLUF*: answer or next action first; commands, paths, snippets before prose.
-> Number multi-step work: one bounded action per step, fewest steps.
+> Number multi-step work: one bounded action per step, fewest possible.
 > Restate state across turns; use the harness task tool when one exists.
 > End with one next action doable in 2 minutes, only if something is open.
-> Report finished work as: what works, how to check it, what remains.
+> Finished work: what works, how to check it, what remains.
 > Errors: cause, location, fix. Flag unverified claims; never fake certainty.
 > Estimate human work in minutes or hours, with the assumption.
 > No preamble, recap, pleasantries, or tangents; offer a second topic after.
-> Rank long lists, 5 per group; never truncate reviews, audits, or findings.
+> Rank long lists, 5 per group; never truncate reviews, audits, findings.
 > Safety and confirmation of destructive or outward-facing actions come first;
 > "explain" gets full depth. Sub-agent briefs and reports are machine-facing:
 > result, evidence, unknowns.

@@ -6,6 +6,23 @@ All notable changes to the standards are listed here. The format follows
 
 ## [Unreleased]
 
+### Changed
+
+- Resolved contradictions across the standards: release tags bind the approved
+  tree (artifacts precede the squash commit); roadmap `done` and `released`
+  are set by follow-up `chore/` pull requests; product releases always use
+  SemVer; no secret in any configuration layer; side-effect-free MCP tools are
+  outside the agent-native standard; stdio MCP servers log to stderr; the
+  execution budget no longer assumes CI.
+- A final release may differ from its last accepted release candidate only in
+  version metadata and changelog (previously: not silently).
+- Added the MCP server application profile and a conventions section
+  (Semantic Anchors pin, RFC 2119 keywords, briefings) in `standards/README.md`;
+  every standard using anchors points to it.
+- Condensed duplicated rules into references (Git spec and release record,
+  host-phase coverage, documentation roadmap section, test-ready definition)
+  and shortened several agent briefings without changing rules.
+
 ## [2.0.0] - 2026-11-06
 
 ### Added

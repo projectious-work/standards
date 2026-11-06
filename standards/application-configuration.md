@@ -7,6 +7,9 @@ projectious.work applications. It applies to applications that combine two or
 more configuration sources. Libraries with no autonomous runtime use their
 host application's configuration contract instead.
 
+Terms in *italics* are [Semantic Anchors](https://github.com/llm-coding/Semantic-Anchors/tree/ccb05b6bd41a663eaf2595e707d98f35d743e61f); see
+[README](README.md#conventions).
+
 Services and workers follow *Twelve-Factor App* factor III: configuration comes
 from the environment, and no per-environment configuration files are
 committed. Layered configuration files are the company exception for CLI
@@ -59,7 +62,7 @@ Rejected settings produce actionable diagnostics rather than being ignored.
 - Deprecated keys identify their replacement and removal horizon.
 
 Secrets are injected, referenced, or obtained from an approved secret store.
-Ordinary committed configuration MUST NOT contain secret values.
+No configuration file at any layer contains a secret value.
 
 ## Effective configuration and provenance
 
@@ -73,8 +76,8 @@ effective configuration. It reports, in deterministic key order:
 - overridden sources when useful; and
 - rejected settings with reasons.
 
-Paths, credentials, tokens, personal data, and secret-shaped values undergo the
-normal redaction policy. Diagnostic output MUST be available in a stable
+Sensitive paths, credentials, tokens, personal data, and secret-shaped values
+undergo the normal redaction policy. Diagnostic output MUST be available in a stable
 machine-readable form for applications that expose machine interfaces.
 
 ## Testing

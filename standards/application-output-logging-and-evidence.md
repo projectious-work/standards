@@ -6,6 +6,9 @@ This standard separates requested results, operational diagnostics, and
 durable domain evidence. It applies to command-line applications, services,
 workers, and user-facing applications according to their application profile.
 
+Terms in *italics* are [Semantic Anchors](https://github.com/llm-coding/Semantic-Anchors/tree/ccb05b6bd41a663eaf2595e707d98f35d743e61f); see
+[README](README.md#conventions).
+
 ## Three information channels
 
 1. **Application output** communicates the result requested by a person or
@@ -18,8 +21,9 @@ These channels MAY share an internal event model but MUST have distinct
 contracts and retention.
 
 Operational logs follow *Twelve-Factor App* factor XI: an application writes
-log events as an unbuffered stream (stdout for services and workers, stderr for
-CLIs), and the environment collects, routes, and retains them. Logs may be
+log events as an unbuffered stream (stdout for services, workers, and remote
+MCP servers; stderr for CLIs and stdio MCP servers, whose stdout carries only
+the protocol), and the environment collects, routes, and retains them. Logs may be
 rotated, sampled, or lost, so nothing may depend on them as proof. Whatever must
 survive that, to support recovery or audit or to answer "what exactly
 happened", is evidence: the application writes it deliberately to its own store

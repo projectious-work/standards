@@ -9,14 +9,14 @@ description: Company spec-driven development cycle. Use when implementing a road
 
 Binding company standard. The rules below are the summary; the linked file is authoritative. Read only the section the task needs.
 
-## Spec-driven development-cycle standard
+## Spec-driven development cycle standard
 
 Baseline frozen, test-ready specification versions for every feature, map
-each normative requirement, plan, and review independently. Write acceptance
-tests in a fresh session from the specifications only; implement in parallel
-without seeing them; loop until all pass, classifying each failure. Verify
-against the same baseline. No requirement disappears and no specification
-changes silently; small direct changes first freeze the next version.
+each normative requirement, plan, and review independently. For user-facing
+behavior, write acceptance tests in a fresh session from the specifications
+only; implement in parallel without seeing them; loop until all pass,
+classifying each failure. Verify against the same baseline. No requirement
+disappears or changes silently; small changes first freeze the next version.
 
 Full standard: `standards/spec-driven-development-cycle.md`. Sections:
 

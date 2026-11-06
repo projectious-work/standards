@@ -2,13 +2,13 @@
 
 ## Purpose and scope
 
-This standard limits how AI agents spend parallelism, review rounds, CI runs,
-and waiting time. It applies to every projectious.work repository and to every
+This standard limits how AI agents spend parallelism, review rounds,
+verification runs, and waiting time. It applies to every projectious.work repository and to every
 harness that dispatches sub-agents or drives verification loops.
 
 The
 [spec-driven development cycle](spec-driven-development-cycle.md) decides
-*which* work may run in parallel; this standard caps *how much* runs at once
+which work may run in parallel; this standard caps how much runs at once
 and how long loops may continue.
 
 ## Principles
@@ -19,7 +19,7 @@ and how long loops may continue.
   integration, and review of delegated results. Sub-agents lack the full
   conversation context.
 - Every loop has an exit: a round limit, a rerun limit, or an escalation.
-- Waiting is not work. An agent never spends turns polling.
+- Waiting is not work.
 
 ## Concurrency
 
@@ -40,20 +40,21 @@ and how long loops may continue.
   push per finding.
 - Get the affected suites green locally before pushing. Heavy suites (full
   browser acceptance, native contract suites, image builds) run once at the
-  ready-for-merge gate, on the integration branch, or on schedule — not on
-  every push.
+  ready-for-merge gate or on the phase branch — not on every push.
 
 ## Failures and waiting
 
-- A red check gets at most **1 rerun**. A second red is a defect to analyse.
-- A required check that is red only because of infrastructure or settings
-  (also red on the base branch or in unrelated changes) is reported once to
-  the owner, with evidence, instead of waiting or retrying.
+- A failed verification run or required check gets at most **1 rerun**. A
+  second failure is a defect to analyse.
+- A verification run or required check that fails only because of
+  infrastructure or settings (also failing on the base branch or in unrelated
+  changes) is reported once to the owner, with evidence, instead of waiting or
+  retrying.
 - Do not poll. End the turn and resume on a completion or failure signal, or
   after a single long delay of at least 30 minutes.
 
 ## Agent briefing
 
-> Run at most 3 sub-agents at once and work in waves. Keep core work yourself.
-> Review gates get 2 rounds, red checks get 1 rerun, infrastructure failures
-> get one evidenced report. Push batches, not findings. Never poll.
+> At most 3 sub-agents at once, in waves; keep core work yourself. Review
+> gates get 2 rounds, failed verifications 1 rerun, infrastructure failures one
+> evidenced report to the owner. Push batches, not findings. Never poll.

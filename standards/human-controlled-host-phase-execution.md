@@ -10,6 +10,9 @@ environment. Examples include native-host smoke tests, container-engine
 validation, signing, publication, and independent verification of prepared
 artifacts.
 
+Terms in *italics* are [Semantic Anchors](https://github.com/llm-coding/Semantic-Anchors/tree/ccb05b6bd41a663eaf2595e707d98f35d743e61f); see
+[README](README.md#conventions).
+
 Host execution is an exception boundary, not a general escape hatch. A project
 MUST keep deterministic preparation, compilation, and all checks that can run
 safely in the restricted environment on that side of the boundary. Only
@@ -49,7 +52,8 @@ checks.
 The handover MUST bind:
 
 - normalized release version and intended tag;
-- source repository and commit;
+- source repository and release-commit tree (the tagged squash commit does not
+  exist before the merge);
 - producer and toolchain identity;
 - every transferred path and digest;
 - the applicable validation-manifest schema version; and
@@ -89,7 +93,8 @@ journal and MUST NOT mutate the finalized validation manifest.
 Human authorization and signing occur only after the final mutable candidate
 step. If a covered input or artifact changes afterward, the handover identity,
 affected validation, authorization, and signatures are invalid and a new
-candidate is required.
+candidate is required. After the squash merge, the publisher verifies that the
+tagged commit's tree equals the handover tree.
 
 ## Bootstrap and executable resolution
 
@@ -171,15 +176,9 @@ evidence.
 
 ## Coverage, vulnerabilities, and caches
 
-Impact-selected validation MUST retain a mandatory core. The reviewed universe
-of conditional checks is partitioned completely: every surface is selected by
-a deterministic trigger or skipped with an evidenced reason. Comparison
-provenance is recorded and the publisher validates the partition.
-
-Readiness evidence MAY replace nested execution when nested execution would
-widen the outer trust boundary and the release does not claim that execution
-boundary. Full lifecycle execution remains required when relevant inputs
-changed or the released capability claims it.
+Impact selection and readiness evidence follow the
+[verification standard](software-verification-and-release-engineering.md#change-risk);
+the publisher revalidates the partition.
 
 Vulnerability results distinguish fix-available blockers, no-fix warnings,
 scanner failure, and reviewed exceptions. Raw scanner output and normalized
@@ -198,8 +197,8 @@ Implementations MUST satisfy the cases in
 their handover with
 [`host-gated-release-handover-v1.schema.json`](schemas/host-gated-release-handover-v1.schema.json).
 
-ainfra and aibox are reference implementations. Their mechanisms are examples,
-not mandatory templates.
+Reference implementations are listed in the conformance document; they are
+examples, not mandatory templates.
 
 ## Agent briefing
 
