@@ -15,7 +15,8 @@ Follow *GitHub Flow* with *Conventional Commits*: branch `feat/`, `fix/`,
 `chore/`, or `spec/` from `main` as `[<issue>-]<slug>`, then squash-merge
 back after owner approval. The squash title's type matches the prefix.
 Releases: `release/vX.Y.Z` holds only `chore(release): vX.Y.Z`; tag the
-squash commit. Specs freeze by merge and tag `spec/<slug>/vN`. LTS lines
+squash commit. Specs live in `spec/<slug>/vN/` and freeze by merge and tag
+`spec/<slug>/vN`. LTS lines
 `lts/vN` use the same flow (names `lts<N>-…`); fixes land on `main` first,
 then `git cherry-pick -x`. Never develop on `release/*`.
 

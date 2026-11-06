@@ -21,6 +21,7 @@ Usage inside a consumer repository:
 
     python3 .standards/standards.py check   # exit 1 on drift or local edits
     python3 .standards/standards.py sync    # regenerate skills and AGENTS.md
+    python3 .standards/standards.py check-specs [--base <ref>]   # spec layout
 
 Never edit `.standards/` or the generated views by hand: change the standard
 upstream, release it, and install the new version.
@@ -64,8 +65,10 @@ SKILLS = [
      "phase or material change against a specification: baselining the spec, "
      "building requirement inventories, planning and reviewing work packages, "
      "freezing the contract, writing acceptance tests, verifying, or closing "
-     "phase evidence.",
-     ["spec-driven-development-cycle.md"]),
+     "phase evidence; also for specification layout (spec/<slug>/vN/), "
+     "SPEC.toml, freezing and tagging spec versions, and Spec: references.",
+     ["spec-driven-development-cycle.md",
+      "specification-layout-and-lifecycle.md"]),
     ("standard-architecture",
      "Company software architecture, code design, and refactoring standards. "
      "Use when designing module boundaries, ports and adapters, use cases, "
@@ -258,6 +261,126 @@ def git(repo, *args):
     return r.stdout.strip() if r.returncode == 0 else None
 
 
+# ---------- specifications ----------
+
+SLUG = re.compile(r"^[a-z0-9]+(-[a-z0-9]+)*$")
+SPEC_REQUIRED = ["SPEC.toml", "requirements.md", "journeys.md", "overview.md"]
+SPEC_META = {"SPEC.toml", "CHANGES.md", "FREEZE.sha256"}
+
+
+def spec_files(vdir):
+    return sorted(p.relative_to(vdir).as_posix() for p in vdir.rglob("*")
+                  if p.is_file() and p.name != "FREEZE.sha256")
+
+
+def freeze_lines(vdir):
+    return "".join(f"{digest(vdir / f)}  {f}\n" for f in spec_files(vdir))
+
+
+def parse_freeze(text):
+    entries = {}
+    for line in text.splitlines():
+        if line.strip():
+            h, _, f = line.partition("  ")
+            entries[f.lstrip("*")] = h
+    return entries
+
+
+def check_version(root, slug, n, vdir, errors):
+    try:
+        import tomllib
+    except ImportError:
+        fail("check-specs needs Python 3.11 or later (tomllib)")
+    where = f"spec/{slug}/v{n}"
+    for f in SPEC_REQUIRED:
+        if not (vdir / f).is_file():
+            errors.append(f"{where}: missing {f}")
+    if not list(vdir.glob("interfaces.*")):
+        errors.append(f"{where}: missing interfaces.* (interface catalog)")
+    try:
+        meta = tomllib.loads(read(vdir / "SPEC.toml"))
+    except (OSError, ValueError) as e:
+        errors.append(f"{where}/SPEC.toml: {e}")
+        return None
+    if meta.get("slug") != slug or meta.get("version") != n:
+        errors.append(f"{where}/SPEC.toml: slug/version must be {slug!r}/{n}")
+    expected_sup = f"{slug}@v{n - 1}" if n > 1 else None
+    if meta.get("supersedes") != expected_sup:
+        errors.append(f"{where}/SPEC.toml: supersedes must be {expected_sup!r}")
+    status = meta.get("status")
+    freeze = vdir / "FREEZE.sha256"
+    if status == "frozen":
+        if not freeze.is_file():
+            errors.append(f"{where}: frozen but FREEZE.sha256 is missing")
+        elif parse_freeze(read(freeze)) != parse_freeze(freeze_lines(vdir)):
+            errors.append(f"{where}: files do not match FREEZE.sha256")
+        tag = f"spec/{slug}/v{n}"
+        if git(root, "rev-parse", "-q", "--verify", f"refs/tags/{tag}") is None:
+            errors.append(f"{where}: tag {tag} is missing")
+        elif git(root, "diff", "--quiet", tag, "--", f"spec/{slug}/v{n}") is None:
+            errors.append(f"{where}: content differs from tag {tag}")
+    elif status == "draft":
+        if freeze.exists():
+            errors.append(f"{where}: draft must not contain FREEZE.sha256")
+    else:
+        errors.append(f"{where}/SPEC.toml: status must be draft or frozen")
+    if n > 1:
+        changes = vdir / "CHANGES.md"
+        prev = vdir.parent / f"v{n - 1}"
+        if not changes.is_file():
+            errors.append(f"{where}: missing CHANGES.md")
+        elif prev.is_dir():
+            listed = set(re.findall(r"`([^`]+)`", read(changes)))
+            a, b = set(spec_files(prev)), set(spec_files(vdir))
+            differ = {f for f in a | b if f not in SPEC_META and
+                      (f not in a or f not in b or
+                       digest(prev / f) != digest(vdir / f))}
+            for f in sorted(differ - listed):
+                errors.append(f"{where}/CHANGES.md: does not list changed file {f}")
+    return status
+
+
+def cmd_check_specs(root, base):
+    spec_root = root / "spec"
+    errors, frozen = [], set()
+    if spec_root.is_dir():
+        for sdir in sorted(p for p in spec_root.iterdir() if p.is_dir()):
+            slug = sdir.name
+            if not SLUG.match(slug) or re.search(r"-v\d+$", slug):
+                errors.append(f"spec/{slug}: invalid slug")
+                continue
+            versions = sorted(int(p.name[1:]) for p in sdir.iterdir()
+                              if p.is_dir() and re.fullmatch(r"v[1-9]\d*", p.name))
+            others = [p.name for p in sdir.iterdir()
+                      if not re.fullmatch(r"v[1-9]\d*", p.name)]
+            if others:
+                errors.append(f"spec/{slug}: unexpected entries {sorted(others)}")
+            if versions != list(range(1, len(versions) + 1)):
+                errors.append(f"spec/{slug}: versions must be v1..vN without gaps")
+            for n in versions:
+                if check_version(root, slug, n, sdir / f"v{n}", errors) == "frozen":
+                    frozen.add(f"spec/{slug}/v{n}/")
+    if base:
+        diff = git(root, "diff", "--name-status", "--no-renames", base, "--", "spec")
+        if diff is None:
+            fail(f"cannot diff against {base}")
+        frozen_at_base = set()
+        for line in (git(root, "ls-tree", "-r", "--name-only", base, "--", "spec") or "").splitlines():
+            if line.endswith("/SPEC.toml") and 'status = "frozen"' in \
+                    (git(root, "show", f"{base}:{line}") or ""):
+                frozen_at_base.add(line[:-len("SPEC.toml")])
+        for line in diff.splitlines():
+            kind, path = line.split("\t", 1)
+            if kind != "A" and any(path.startswith(d) for d in frozen_at_base):
+                errors.append(f"{path}: frozen at {base}; create the next version instead")
+            elif kind == "D":
+                errors.append(f"{path}: specification files are never deleted")
+    for e in errors:
+        print(f"error: {e}")
+    print(f"specifications: {'ok' if not errors else f'{len(errors)} error(s)'}")
+    sys.exit(1 if errors else 0)
+
+
 # ---------- commands ----------
 
 def apply(target, bundle, prefix, version, consumer, check):
@@ -366,6 +489,14 @@ def verify_lock(bundle, lock):
     return ok
 
 
+def parse_base(rest):
+    if not rest:
+        return None
+    if len(rest) == 2 and rest[0] == "--base":
+        return rest[1]
+    fail("usage: standards.py check-specs [--base <ref>]")
+
+
 def main(argv):
     script_dir = Path(__file__).resolve().parent
     cmd, rest = (argv[0], argv[1:]) if argv else ("", [])
@@ -382,17 +513,21 @@ def main(argv):
                 fail(f"{VENDOR_DIR}/ was edited; reinstall a release instead")
             apply(target, bundle, f"{VENDOR_DIR}/", lock["version"], True, check=False)
             return
-        fail("usage: standards.py check | sync")
+        if cmd == "check-specs":
+            return cmd_check_specs(target, parse_base(rest))
+        fail("usage: standards.py check | sync | check-specs [--base <ref>]")
     root = script_dir.parent
     if cmd == "install" and rest and set(rest[1:]) <= {"--allow-unreleased"}:
         return cmd_install(root, Path(rest[0]).resolve(),
                            "--allow-unreleased" in rest)
+    if cmd == "check-specs":
+        return cmd_check_specs(root, parse_base(rest))
     if cmd == "sync" and rest in ([], ["--check"]):
         ok = apply(root, root / "standards", "standards/", "", False,
                    check=rest == ["--check"])
         sys.exit(0 if ok else 1)
     fail("usage: standards.py install <consumer-repo> [--allow-unreleased] "
-         "| sync [--check]")
+         "| sync [--check] | check-specs [--base <ref>]")
 
 
 if __name__ == "__main__":

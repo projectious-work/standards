@@ -1,6 +1,6 @@
 ---
 name: standard-spec-driven-development
-description: Company spec-driven development cycle. Use when implementing a roadmap phase or material change against a specification: baselining the spec, building requirement inventories, planning and reviewing work packages, freezing the contract, writing acceptance tests, verifying, or closing phase evidence.
+description: Company spec-driven development cycle. Use when implementing a roadmap phase or material change against a specification: baselining the spec, building requirement inventories, planning and reviewing work packages, freezing the contract, writing acceptance tests, verifying, or closing phase evidence; also for specification layout (spec/<slug>/vN/), SPEC.toml, freezing and tagging spec versions, and Spec: references.
 ---
 
 # standard-spec-driven-development
@@ -11,15 +11,16 @@ Binding company standard. The rules below are the summary; the linked file is au
 
 ## Spec-driven development-cycle standard
 
-Baseline the specification, turn the roadmap item into a test-ready contract,
-map every normative requirement, plan ownership and evidence, review contract
-and plan independently, and freeze the contract. Then write user-facing
-acceptance tests in a fresh session from the frozen contract only, implement
-in parallel without seeing those tests, and loop until every test passes,
-classifying each failure as implementation, test, contract, or
-infrastructure defect. Verify independently against the same complete
-baseline. No requirement disappears and no specification change is silent.
-Small direct changes update baseline and tests in place.
+Baseline the specification, turn each feature of the roadmap item into a
+test-ready specification version, map every normative requirement, plan
+ownership and evidence, review specifications and plan independently, and
+freeze them. Then write user-facing acceptance tests in a fresh session from
+the frozen specifications only, implement in parallel without seeing those
+tests, and loop until every test passes, classifying each failure as
+implementation, test, contract, or infrastructure defect. Verify
+independently against the same complete baseline. No requirement disappears
+and no specification change is silent. Small direct changes first freeze the
+next specification version.
 
 Full standard: `standards/spec-driven-development-cycle.md`. Sections:
 
@@ -39,3 +40,22 @@ Full standard: `standards/spec-driven-development-cycle.md`. Sections:
 - 10. Complete phase evidence
 - 11. Retrospect and improve
 - Required cycle record
+
+## Specification layout and lifecycle standard
+
+Every feature has a specification; fixes cite it and add a version only when
+it was wrong. Versions live in self-sufficient `spec/<slug>/vN/` directories
+(`SPEC.toml`, *EARS* requirements, interface catalog, journeys). Freeze =
+owner approval, `FREEZE.sha256`, squash merge, tag `spec/<slug>/vN`. Frozen
+versions are never edited or deleted; any change is `vN+1` via its own `spec/`
+branch. Read only the latest frozen version; cite it as `Spec: <slug>@vN`.
+
+Full standard: `standards/specification-layout-and-lifecycle.md`. Sections:
+
+- Purpose and scope
+- What gets a specification
+- Names
+- Contents of a version
+- Lifecycle
+- Reading rule for agents
+- Validation

@@ -15,7 +15,7 @@ them to AI coding agents (Claude Code, Codex, and any harness that reads
 | `scripts/standards.py` | Installs, regenerates, and checks the standards in a repository. |
 
 The standards cover agent communication and execution budget, Git branching
-(*GitHub Flow*) and releases, spec-driven development, architecture and
+(*GitHub Flow*) and releases, specification layout and spec-driven development, architecture and
 refactoring, application engineering (*Twelve-Factor App* alignment), agent
 interfaces, security, public documentation, and roadmaps.
 
@@ -48,6 +48,7 @@ In the repository afterwards:
 ```sh
 python3 .standards/standards.py check   # exit 1 on local edits or drift
 python3 .standards/standards.py sync    # regenerate skills and AGENTS.md block
+python3 .standards/standards.py check-specs [--base main]   # spec/ layout and freezes
 ```
 
 To upgrade, rerun `install` from a newer tag.

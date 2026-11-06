@@ -62,16 +62,17 @@ on.
 - Work for an LTS line starts the name with `lts<N>-` (for `lts/vN`) or
   `lts<N>.<M>-` (for `lts/vN.M`; the only place a `.` is allowed), so the
   merge target is visible.
-- `spec/<slug>` creates the first version of a specification;
-  `spec/<slug>-v<N>` develops its version N.
+- `spec/[<issue>-]<slug>-v<N>` develops version N of a specification (the
+  first is `-v1`); its directory and tag are defined by the
+  [layout standard](specification-layout-and-lifecycle.md#names).
 - `release/` names carry the exact version with `v`, including prereleases.
 
 ```text
 feat/123-oauth-login
 fix/null-crash-on-empty-config
 chore/bump-go-1-24
-spec/payments-api
-spec/payments-api-v2
+spec/payments-api-v1
+spec/123-payments-api-v2
 release/v1.4.0
 release/v2.0.0-rc.1
 lts/v1
@@ -130,14 +131,16 @@ pass; `main` never carries an intentionally failing test.
 Specifications are written before development, following the
 [spec-driven development cycle](spec-driven-development-cycle.md).
 
-1. Write or revise the specification on `spec/<slug>` (first version) or
-   `spec/<slug>-v<N>` (version N).
-2. When the specification is approved, freeze it: squash-merge it into `main`
-   and tag the merge commit `spec/<slug>/v<N>`. A frozen version is never
-   edited; changes create the next version on a new `spec/*` branch.
+1. Write the specification version in `spec/<slug>/v<N>/` on branch
+   `spec/[<issue>-]<slug>-v<N>`.
+2. When it is approved, freeze it as the
+   [layout standard](specification-layout-and-lifecycle.md#lifecycle) defines:
+   `FREEZE.sha256`, squash merge into `main`, tag `spec/<slug>/v<N>` on the
+   merge commit. A frozen version is never edited or deleted; changes create
+   the next version on a new `spec/` branch.
 3. Implementation happens on `feat/*`, `fix/*`, or `chore/*` branches against
-   the frozen version. Their pull requests name it in the body as
-   `Spec: <slug>@v<N>`.
+   frozen versions and never changes `spec/`. Their pull requests carry one
+   `Spec: <slug>@v<N>` line per specification.
 4. A phase with separate acceptance-test and implementation tracks keeps them
    on `<prefix>/<slug>-tests` and `<prefix>/<slug>-impl`. The integration owner
    merges them (plain merge, no squash) into the phase branch
@@ -266,7 +269,8 @@ repository migrates once:
 > `chore/`, or `spec/` from `main` as `[<issue>-]<slug>`, then squash-merge
 > back after owner approval. The squash title's type matches the prefix.
 > Releases: `release/vX.Y.Z` holds only `chore(release): vX.Y.Z`; tag the
-> squash commit. Specs freeze by merge and tag `spec/<slug>/vN`. LTS lines
+> squash commit. Specs live in `spec/<slug>/vN/` and freeze by merge and tag
+> `spec/<slug>/vN`. LTS lines
 > `lts/vN` use the same flow (names `lts<N>-…`); fixes land on `main` first,
 > then `git cherry-pick -x`. Never develop on `release/*`.
 

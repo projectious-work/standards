@@ -2,13 +2,15 @@
 
 ## Purpose and scope
 
-This standard defines how projectious.work implements a phase or material
-change against an accepted specification. It applies when a repository has a
-normative product or engineering specification.
+This standard defines how projectious.work implements a feature, fix, or
+roadmap phase against frozen specification versions. It applies when a
+repository has normative specifications.
 
-This standard does not prescribe where specifications are stored or how
-specification changes are represented; a future revision of this standard
-will. It does require the selected baseline and every change to it to be explicit.
+Where specifications live, what a version contains, and how versions are
+frozen and changed is defined in the
+[specification layout and lifecycle standard](specification-layout-and-lifecycle.md).
+This standard requires the selected baseline and every change to it to be
+explicit.
 
 A repository adopting this standard, or a later revision of it, names the
 first phase it applies to. Phases completed before that point are not reopened
@@ -25,14 +27,15 @@ A direct, narrowly scoped change request from the owner (for example "move
 this hint into the sidebar, collapsible, also on mobile") does not restart the
 cycle. The agent:
 
-1. implements the change immediately;
-2. updates the accepted baseline and the affected tests in the same change,
-   with a one-line note in the baseline's change record;
+1. if the affected behavior is specified in a frozen version, creates the next
+   version on its own `spec/` branch and freezes it; the owner's request is
+   the approval;
+2. implements the change against that version, with the affected tests, on a
+   `feat/` or `fix/` branch;
 3. decides open details with sensible defaults and lists them afterwards.
 
-No new alternatives, approval round, or phase is required. During an active
-phase with a frozen contract (§5), the updated contract becomes a new frozen
-reference that the integration owner hands to both tracks (§6). A change that
+No new alternatives, review round, or phase is required. During an active
+phase, the integration owner hands the new version to both tracks (§6). A change that
 alters scope, public interfaces, security, compatibility, or persistence is not
 a small change and follows the full cycle.
 
@@ -80,21 +83,21 @@ it looks and feels, not only what exists:
 The owner approves the chosen alternative with the baseline; from then on it is
 as normative as the functional requirements.
 
-### Phase contract
+### Specification contract
 
-A roadmap item names a phase's outcome; it is not a contract. Before planning,
-the phase produces a contract: the specification changes, schemas, fixtures,
-examples, and an interface catalog for everything the phase makes observable,
-such as operations, artifacts, options and defaults, result fields, error
-codes, supported targets, and the observable check for each effect, including
-absence when something is disabled. Where the catalog is data, it is
-machine-readable and validated with the specification. Owner decisions the
-contract depends on are made here, not during implementation.
+A roadmap item names an outcome; it is not a contract. The contract is a
+frozen specification version `<slug>@v<N>` per feature, laid out as the
+[layout standard](specification-layout-and-lifecycle.md#contents-of-a-version)
+defines: *EARS* requirements, an interface catalog for everything the feature
+makes observable, acceptance journeys, schemas, fixtures, and examples. A
+roadmap phase is covered by the specification versions of its features. Owner
+decisions a specification depends on are made here, not during
+implementation.
 
-The contract is *test-ready* when an author who reads only the contract can
-derive every acceptance test without reading code and without inventing an
-identifier, option, default, result field, error code, or supported target. A
-contract that is not test-ready blocks approval.
+A specification version is *test-ready* when an author who reads only that
+version can derive every acceptance test without reading code and without
+inventing an identifier, option, default, result field, error code, or
+supported target. A version that is not test-ready blocks approval.
 
 ## 1. Build requirement, dependency, and risk inventories
 
@@ -159,7 +162,8 @@ authorization and is recorded in the cycle record. The designated reviewer
 recorded before the review starts; a reviewer proposed by automated model
 routing is recorded the same way.
 
-The reviewer also confirms that the phase contract is test-ready.
+The reviewer also confirms that every specification version in the baseline
+is test-ready.
 
 Each normative requirement is classified:
 
@@ -178,9 +182,10 @@ tests, and unjustified exclusions amend the plan before implementation.
 
 Record the specification baseline, plan revision, ownership, expected
 evidence, accepted exclusions, risks, and integration order. The owner approves
-the reviewed phase contract, which is then frozen: its commit or version is
-recorded in the cycle record as the contract reference that both tracks in §6
-start from. Baselining makes changes visible; it does not prohibit learning.
+the reviewed specification versions, which are then frozen as the
+[layout standard](specification-layout-and-lifecycle.md#lifecycle) defines. The
+cycle record holds their `<slug>@v<N>` references; both tracks in §6 start
+from the commit that carries all their tags. Baselining makes changes visible; it does not prohibit learning.
 
 ## 6. Implement in controlled waves
 
@@ -200,13 +205,13 @@ participant that sees both. It does not implement; the implementation track
 is a separate session or sub-agent.
 
 - **Acceptance-test track.** A fresh agent session, with no conversation
-  history, works in its own worktree created from the frozen contract and
+  history, works in its own worktree created from the frozen specification versions and
   commits to a tests-only branch. Its input is the contract, the applicable
   acceptance journeys, and the test harness at the contract commit. It does
   not read implementation branches and receives no implementation reasoning.
   Its tests exercise only public interfaces and name the requirement or
   acceptance ID each test verifies.
-- **Implementation track.** Works from the frozen contract and the codebase on
+- **Implementation track.** Works from the frozen specification versions and the codebase on
   its own branch, writes its unit and component tests test-first, and does not
   see the acceptance tests, test plan, or test identifiers while the barrier
   lasts.
@@ -223,7 +228,7 @@ integration owner then runs the integration loop:
    - *implementation defect:* returned to the implementation track as expected
      versus observed behavior in contract terms, never as test source;
    - *test defect:* the test contradicts the contract; returned to the
-     acceptance-test track with the test ID, the contract reference, and the
+     acceptance-test track with the test ID, the specification reference, and the
      rationale, never with implementation details;
    - *contract defect:* the contract is ambiguous or wrong; affected work
      stops and §7 applies;
@@ -248,8 +253,9 @@ When implementation reveals a specification defect or necessary change, stop
 affected work and record a proposed baseline change with rationale and impact
 on requirements, plans, tests, security, compatibility, documentation, and
 roadmap. Continue only after the change is accepted or rejected through the
-project's governing process. An accepted change produces a new frozen contract
-reference for both tracks.
+project's governing process. An accepted change produces a new frozen
+specification version; work in flight follows the layout standard's rule for
+new versions.
 
 An accepted change updates the baseline and plan. Already completed work is
 rechecked against affected requirements. Implementation convenience never
@@ -314,8 +320,8 @@ standards, repository agent guidance, project guidance, or model routing.
 
 ## Required cycle record
 
-The cycle leaves a reviewable record containing baseline, phase contract and
-its frozen reference, plan, task graph, ownership, traceability matrix,
+The cycle leaves a reviewable record containing baseline, frozen
+specification versions (`<slug>@v<N>`), plan, task graph, ownership, traceability matrix,
 designated reviewers, plan-conformance result, integration-loop failure
 classifications, implementation
 evidence, implementation-conformance result, accepted baseline changes, gap
@@ -323,12 +329,13 @@ closures, and completion approval.
 
 ## Agent briefing
 
-> Baseline the specification, turn the roadmap item into a test-ready contract,
-> map every normative requirement, plan ownership and evidence, review contract
-> and plan independently, and freeze the contract. Then write user-facing
-> acceptance tests in a fresh session from the frozen contract only, implement
-> in parallel without seeing those tests, and loop until every test passes,
-> classifying each failure as implementation, test, contract, or
-> infrastructure defect. Verify independently against the same complete
-> baseline. No requirement disappears and no specification change is silent.
-> Small direct changes update baseline and tests in place.
+> Baseline the specification, turn each feature of the roadmap item into a
+> test-ready specification version, map every normative requirement, plan
+> ownership and evidence, review specifications and plan independently, and
+> freeze them. Then write user-facing acceptance tests in a fresh session from
+> the frozen specifications only, implement in parallel without seeing those
+> tests, and loop until every test passes, classifying each failure as
+> implementation, test, contract, or infrastructure defect. Verify
+> independently against the same complete baseline. No requirement disappears
+> and no specification change is silent. Small direct changes first freeze the
+> next specification version.

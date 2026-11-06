@@ -35,6 +35,7 @@ phases with these fields:
 | `dependencies` | Optional stable IDs whose outcomes are prerequisites. |
 | `issues` | Optional external tracking references. |
 | `decisions` | Optional governing decision references. |
+| `specs` | Frozen specification versions (`<slug>@v<N>`) that define the item; a phase lists those of its features. Required before `in_progress` for items with a specification. |
 | `devNote` | Required when a non-trivial item becomes `done`; retained when released. |
 | `release` | Required for `released`; names a published release containing the outcome. |
 | `rationale` | Required for `cancelled` unless `decisions` gives the reason. |
@@ -88,7 +89,7 @@ cycle](spec-driven-development-cycle.md) map its events to statuses:
 
 | Cycle event | Roadmap status |
 |---|---|
-| Revised plan approved and baselined | `planned` (if it was `idea`) |
+| Specification versions frozen and plan approved | `planned` (if it was `idea`) |
 | Implementation waves start | `in_progress` |
 | Pull request merged | unchanged; stays `in_progress` |
 | Phase evidence complete | `done` |
@@ -141,6 +142,7 @@ groups:
         status: released
         release: 2.4.0
         issues: [PROJ-101]
+        specs: [guided-first-upload@v1]
         devNote: dev-notes/RM-12-guided-first-upload.md
       - id: RM-13
         title: Bulk import
