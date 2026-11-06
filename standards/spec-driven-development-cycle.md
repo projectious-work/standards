@@ -27,17 +27,17 @@ A direct, narrowly scoped change request from the owner (for example "move
 this hint into the sidebar, collapsible, also on mobile") does not restart the
 cycle. The agent:
 
-1. if the affected behavior is specified in a frozen version, creates the next
-   version on its own `spec/` branch and freezes it; the owner's request is
-   the approval;
+1. creates the next specification version of the affected feature (or its
+   `v1`, if none exists) on its own `spec/` branch and freezes it; the owner's
+   request is the approval;
 2. implements the change against that version, with the affected tests, on a
    `feat/` or `fix/` branch;
 3. decides open details with sensible defaults and lists them afterwards.
 
 No new alternatives, review round, or phase is required. During an active
-phase, the integration owner hands the new version to both tracks (§6). A change that
-alters scope, public interfaces, security, compatibility, or persistence is not
-a small change and follows the full cycle.
+phase, the integration owner hands the new version to both tracks (§6). A
+change that alters scope, public interfaces, security, compatibility, or
+persistence is not a small change and follows the full cycle.
 
 ## Principles
 
@@ -54,7 +54,7 @@ a small change and follows the full cycle.
 
 Before planning, record:
 
-- accepted specification version or source commit;
+- frozen specification versions (`<slug>@v<N>`);
 - roadmap phase or change scope;
 - applicable specification files, normative requirements, schemas, examples,
   and acceptance journeys;
@@ -185,7 +185,8 @@ evidence, accepted exclusions, risks, and integration order. The owner approves
 the reviewed specification versions, which are then frozen as the
 [layout standard](specification-layout-and-lifecycle.md#lifecycle) defines. The
 cycle record holds their `<slug>@v<N>` references; both tracks in §6 start
-from the commit that carries all their tags. Baselining makes changes visible; it does not prohibit learning.
+from the commit that carries all their tags. Baselining makes changes
+visible; it does not prohibit learning.
 
 ## 6. Implement in controlled waves
 
@@ -205,16 +206,16 @@ participant that sees both. It does not implement; the implementation track
 is a separate session or sub-agent.
 
 - **Acceptance-test track.** A fresh agent session, with no conversation
-  history, works in its own worktree created from the frozen specification versions and
-  commits to a tests-only branch. Its input is the contract, the applicable
-  acceptance journeys, and the test harness at the contract commit. It does
-  not read implementation branches and receives no implementation reasoning.
-  Its tests exercise only public interfaces and name the requirement or
-  acceptance ID each test verifies.
-- **Implementation track.** Works from the frozen specification versions and the codebase on
-  its own branch, writes its unit and component tests test-first, and does not
-  see the acceptance tests, test plan, or test identifiers while the barrier
-  lasts.
+  history, works in its own worktree created from the frozen specification
+  versions and commits to a tests-only branch. Its input is the contract, the
+  applicable acceptance journeys, and the test harness at the contract commit.
+  It does not read implementation branches and receives no implementation
+  reasoning. Its tests exercise only public interfaces and name the requirement
+  or acceptance ID each test verifies.
+- **Implementation track.** Works from the frozen specification versions and the
+  codebase on its own branch, writes its unit and component tests test-first,
+  and does not see the acceptance tests, test plan, or test identifiers while
+  the barrier lasts.
 
 Both tracks start after the freeze and run in parallel. An implementer who
 cannot see the tests optimizes for the contract, not for test structure. The
@@ -228,8 +229,8 @@ integration owner then runs the integration loop:
    - *implementation defect:* returned to the implementation track as expected
      versus observed behavior in contract terms, never as test source;
    - *test defect:* the test contradicts the contract; returned to the
-     acceptance-test track with the test ID, the specification reference, and the
-     rationale, never with implementation details;
+     acceptance-test track with the test ID, the specification reference, and
+     the rationale, never with implementation details;
    - *contract defect:* the contract is ambiguous or wrong; affected work
      stops and §7 applies;
    - *infrastructure failure:* handled under the
@@ -304,7 +305,8 @@ A phase is complete only when these items hold (its *Definition of Done*):
 - implementation is integrated;
 - required verification passes without unexplained skips;
 - the conformance matrix is accepted;
-- specification and executable contracts reflect implemented behavior;
+- implemented behavior conforms to the frozen specification versions and
+  executable contracts;
 - user documentation describes observed behavior;
 - the development note captures decisions, deviations, and validation;
 - roadmap status and evidence links are updated;
@@ -320,22 +322,17 @@ standards, repository agent guidance, project guidance, or model routing.
 
 ## Required cycle record
 
-The cycle leaves a reviewable record containing baseline, frozen
-specification versions (`<slug>@v<N>`), plan, task graph, ownership, traceability matrix,
+The cycle leaves a reviewable record containing baseline, frozen specification
+versions (`<slug>@v<N>`), plan, task graph, ownership, traceability matrix,
 designated reviewers, plan-conformance result, integration-loop failure
-classifications, implementation
-evidence, implementation-conformance result, accepted baseline changes, gap
-closures, and completion approval.
+classifications, implementation evidence, implementation-conformance result,
+accepted baseline changes, gap closures, and completion approval.
 
 ## Agent briefing
 
-> Baseline the specification, turn each feature of the roadmap item into a
-> test-ready specification version, map every normative requirement, plan
-> ownership and evidence, review specifications and plan independently, and
-> freeze them. Then write user-facing acceptance tests in a fresh session from
-> the frozen specifications only, implement in parallel without seeing those
-> tests, and loop until every test passes, classifying each failure as
-> implementation, test, contract, or infrastructure defect. Verify
-> independently against the same complete baseline. No requirement disappears
-> and no specification change is silent. Small direct changes first freeze the
-> next specification version.
+> Baseline frozen, test-ready specification versions for every feature, map
+> each normative requirement, plan, and review independently. Write acceptance
+> tests in a fresh session from the specifications only; implement in parallel
+> without seeing them; loop until all pass, classifying each failure. Verify
+> against the same baseline. No requirement disappears and no specification
+> changes silently; small direct changes first freeze the next version.

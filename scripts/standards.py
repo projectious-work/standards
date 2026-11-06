@@ -280,25 +280,33 @@ def freeze_lines(vdir):
 def parse_freeze(text):
     entries = {}
     for line in text.splitlines():
-        if line.strip():
-            h, _, f = line.partition("  ")
-            entries[f.lstrip("*")] = h
+        m = re.match(r"([0-9a-f]{64}) [ *](.+)$", line)
+        if m:
+            entries[m.group(2)] = m.group(1)
+        elif line.strip():
+            entries[f"<malformed line: {line}>"] = ""
     return entries
 
 
-def check_version(root, slug, n, vdir, errors):
+def load_toml(text):
     try:
         import tomllib
     except ImportError:
         fail("check-specs needs Python 3.11 or later (tomllib)")
+    return tomllib.loads(text)
+
+
+def check_version(root, slug, n, vdir, errors, require_tag):
     where = f"spec/{slug}/v{n}"
     for f in SPEC_REQUIRED:
         if not (vdir / f).is_file():
             errors.append(f"{where}: missing {f}")
-    if not list(vdir.glob("interfaces.*")):
-        errors.append(f"{where}: missing interfaces.* (interface catalog)")
+    catalogs = [p for p in vdir.glob("interfaces.*")
+                if p.suffix in (".toml", ".yaml", ".yml", ".json")]
+    if not catalogs:
+        errors.append(f"{where}: missing interfaces.toml|yaml|yml|json")
     try:
-        meta = tomllib.loads(read(vdir / "SPEC.toml"))
+        meta = load_toml(read(vdir / "SPEC.toml"))
     except (OSError, ValueError) as e:
         errors.append(f"{where}/SPEC.toml: {e}")
         return None
@@ -315,7 +323,9 @@ def check_version(root, slug, n, vdir, errors):
         elif parse_freeze(read(freeze)) != parse_freeze(freeze_lines(vdir)):
             errors.append(f"{where}: files do not match FREEZE.sha256")
         tag = f"spec/{slug}/v{n}"
-        if git(root, "rev-parse", "-q", "--verify", f"refs/tags/{tag}") is None:
+        if not require_tag:
+            pass
+        elif git(root, "rev-parse", "-q", "--verify", f"refs/tags/{tag}") is None:
             errors.append(f"{where}: tag {tag} is missing")
         elif git(root, "diff", "--quiet", tag, "--", f"spec/{slug}/v{n}") is None:
             errors.append(f"{where}: content differs from tag {tag}")
@@ -337,12 +347,27 @@ def check_version(root, slug, n, vdir, errors):
                        digest(prev / f) != digest(vdir / f))}
             for f in sorted(differ - listed):
                 errors.append(f"{where}/CHANGES.md: does not list changed file {f}")
+            for f in sorted((listed & (a | b)) - differ - SPEC_META):
+                errors.append(f"{where}/CHANGES.md: lists unchanged file {f}")
     return status
 
 
 def cmd_check_specs(root, base):
     spec_root = root / "spec"
     errors, frozen = [], set()
+    frozen_at_base = set()
+    if base:
+        if git(root, "rev-parse", "-q", "--verify", f"{base}^{{commit}}") is None:
+            fail(f"unknown --base ref {base}")
+        listing = git(root, "ls-tree", "-r", "--name-only", base, "--", "spec") or ""
+        for line in listing.splitlines():
+            if line.endswith("/SPEC.toml"):
+                try:
+                    meta = load_toml(git(root, "show", f"{base}:{line}") or "")
+                except ValueError:
+                    continue
+                if meta.get("status") == "frozen":
+                    frozen_at_base.add(line[:-len("SPEC.toml")])
     if spec_root.is_dir():
         for sdir in sorted(p for p in spec_root.iterdir() if p.is_dir()):
             slug = sdir.name
@@ -358,17 +383,14 @@ def cmd_check_specs(root, base):
             if versions != list(range(1, len(versions) + 1)):
                 errors.append(f"spec/{slug}: versions must be v1..vN without gaps")
             for n in versions:
-                if check_version(root, slug, n, sdir / f"v{n}", errors) == "frozen":
+                d = f"spec/{slug}/v{n}/"
+                if check_version(root, slug, n, sdir / f"v{n}", errors,
+                                 not base or d in frozen_at_base) == "frozen":
                     frozen.add(f"spec/{slug}/v{n}/")
     if base:
         diff = git(root, "diff", "--name-status", "--no-renames", base, "--", "spec")
         if diff is None:
             fail(f"cannot diff against {base}")
-        frozen_at_base = set()
-        for line in (git(root, "ls-tree", "-r", "--name-only", base, "--", "spec") or "").splitlines():
-            if line.endswith("/SPEC.toml") and 'status = "frozen"' in \
-                    (git(root, "show", f"{base}:{line}") or ""):
-                frozen_at_base.add(line[:-len("SPEC.toml")])
         for line in diff.splitlines():
             kind, path = line.split("\t", 1)
             if kind != "A" and any(path.startswith(d) for d in frozen_at_base):

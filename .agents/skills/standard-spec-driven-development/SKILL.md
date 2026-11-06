@@ -11,16 +11,12 @@ Binding company standard. The rules below are the summary; the linked file is au
 
 ## Spec-driven development-cycle standard
 
-Baseline the specification, turn each feature of the roadmap item into a
-test-ready specification version, map every normative requirement, plan
-ownership and evidence, review specifications and plan independently, and
-freeze them. Then write user-facing acceptance tests in a fresh session from
-the frozen specifications only, implement in parallel without seeing those
-tests, and loop until every test passes, classifying each failure as
-implementation, test, contract, or infrastructure defect. Verify
-independently against the same complete baseline. No requirement disappears
-and no specification change is silent. Small direct changes first freeze the
-next specification version.
+Baseline frozen, test-ready specification versions for every feature, map
+each normative requirement, plan, and review independently. Write acceptance
+tests in a fresh session from the specifications only; implement in parallel
+without seeing them; loop until all pass, classifying each failure. Verify
+against the same baseline. No requirement disappears and no specification
+changes silently; small direct changes first freeze the next version.
 
 Full standard: `standards/spec-driven-development-cycle.md`. Sections:
 

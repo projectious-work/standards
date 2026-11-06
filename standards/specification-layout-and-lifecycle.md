@@ -135,17 +135,21 @@ are working on. They read older versions only to compare, for example with
 
 ## Validation
 
-`python3 .standards/standards.py check-specs` (in the standards repository:
-`python3 scripts/standards.py check-specs`) runs locally before every merge
-and fails on:
+`python3 .standards/standards.py check-specs --base main` (in the standards
+repository: `python3 scripts/standards.py check-specs --base main`) runs
+locally before every merge, and without `--base` on `main` after tagging. It
+fails on:
 
 - directory, slug, or version-number violations, missing required files, or
   an invalid `SPEC.toml`;
-- a frozen version whose files do not match `FREEZE.sha256`, whose tag is
-  missing, or whose content differs from its tag;
+- a frozen version whose files do not match `FREEZE.sha256`, or whose tag is
+  missing or differs from its content (with `--base`, only for versions
+  already frozen there, since the tag follows the merge);
 - a draft or frozen status that contradicts the presence of `FREEZE.sha256`;
 - `CHANGES.md` missing, or not listing exactly the files that differ from the
   previous version;
+- an interface catalog that is not `interfaces.toml`, `.yaml`, `.yml`, or
+  `.json`;
 - with `--base <ref>`: any change to a frozen version, or any deletion of a
   version directory, compared with `<ref>`.
 

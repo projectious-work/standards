@@ -35,7 +35,7 @@ phases with these fields:
 | `dependencies` | Optional stable IDs whose outcomes are prerequisites. |
 | `issues` | Optional external tracking references. |
 | `decisions` | Optional governing decision references. |
-| `specs` | Frozen specification versions (`<slug>@v<N>`) that define the item; a phase lists those of its features. Required before `in_progress` for items with a specification. |
+| `specs` | Frozen `<slug>@v<N>` versions defining the item; a phase lists its features' versions. Required before `in_progress`. |
 | `devNote` | Required when a non-trivial item becomes `done`; retained when released. |
 | `release` | Required for `released`; names a published release containing the outcome. |
 | `rationale` | Required for `cancelled` unless `decisions` gives the reason. |

@@ -40,7 +40,7 @@ change).
 | `feat/<name>` | A feature. | short | `main` or its `lts/*` line |
 | `fix/<name>` | A bug fix. | short | `main` or its `lts/*` line |
 | `chore/<name>` | Everything else: refactoring, docs, tests, build, toolchain, dependencies. | short | `main` or its `lts/*` line |
-| `spec/<name>` | Writing or revising a specification. | short | `main` |
+| `spec/<name>-v<N>` | Drafting version N of a specification. | short | `main` |
 | `<prefix>/<name>-tests`, `-impl` | Tracks of a spec-driven phase. | short | their phase branch `<prefix>/<name>` |
 | `release/vX.Y.Z` | Preparing one release; no development. | short | `main` or its `lts/*` line |
 | `lts/vN` | A supported older major (or `lts/vN.M` for a minor line). | until end of support | never merged |
@@ -142,7 +142,8 @@ Specifications are written before development, following the
    frozen versions and never changes `spec/`. Their pull requests carry one
    `Spec: <slug>@v<N>` line per specification.
 4. A phase with separate acceptance-test and implementation tracks keeps them
-   on `<prefix>/<slug>-tests` and `<prefix>/<slug>-impl`. The integration owner
+   on `<prefix>/<slug>-tests` and `<prefix>/<slug>-impl`, where `<slug>` names
+   the phase (its roadmap item), not a specification. The integration owner
    merges them (plain merge, no squash) into the phase branch
    `<prefix>/<slug>`, which squash-merges into `main` once every acceptance
    test passes. Track branches are the only branches that do not target `main`
@@ -270,9 +271,9 @@ repository migrates once:
 > back after owner approval. The squash title's type matches the prefix.
 > Releases: `release/vX.Y.Z` holds only `chore(release): vX.Y.Z`; tag the
 > squash commit. Specs live in `spec/<slug>/vN/` and freeze by merge and tag
-> `spec/<slug>/vN`. LTS lines
-> `lts/vN` use the same flow (names `lts<N>-…`); fixes land on `main` first,
-> then `git cherry-pick -x`. Never develop on `release/*`.
+> `spec/<slug>/vN`. LTS lines `lts/vN` use the same flow (names `lts<N>-…`);
+> fixes land on `main` first, then `git cherry-pick -x`. Never develop on
+> `release/*`.
 
 Before acting, an agent reports the branch type, source, target, and, for a
 release, the version. An unclear target is a stop condition, not permission
