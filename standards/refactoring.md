@@ -7,10 +7,8 @@ without changing behavior: breaking up large files, extracting libraries
 from monoliths, and paying down technical debt. It applies to every
 refactoring larger than a local rename.
 
-Terms in *italics* are
-[Semantic Anchors](https://github.com/llm-coding/Semantic-Anchors/tree/ccb05b6bd41a663eaf2595e707d98f35d743e61f)
-(commit `ccb05b6b`, 2026-10-26; adopting a later revision is a standards
-change).
+Terms in *italics* are [Semantic Anchors](https://github.com/llm-coding/Semantic-Anchors/tree/ccb05b6bd41a663eaf2595e707d98f35d743e61f); see
+[README](README.md#conventions).
 
 ## Principles
 

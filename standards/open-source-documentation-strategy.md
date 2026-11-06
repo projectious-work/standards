@@ -16,18 +16,16 @@ normative.
 The companion
 [AI-agent accessibility and generative discovery standard](ai-agent-accessibility-and-generative-discovery.md)
 defines the required Markdown, public discovery, and MCP projections of that
-product contract. Repository-operability instructions remain the domain of
-processkit.
+product contract. Repository-operability instructions are outside this
+standard.
 
 The [aibox repository](https://github.com/projectious-work/aibox) and
 [documentation site](https://projectious-work.github.io/aibox/) are the
 reference example. They demonstrate the intended repository-to-site flow, not
 an immutable template or a claim that every current detail already conforms.
 
-Terms in *italics* are
-[Semantic Anchors](https://github.com/llm-coding/Semantic-Anchors/tree/ccb05b6bd41a663eaf2595e707d98f35d743e61f)
-(commit `ccb05b6b`, 2026-10-26; adopting a later revision is a standards
-change).
+Terms in *italics* are [Semantic Anchors](https://github.com/llm-coding/Semantic-Anchors/tree/ccb05b6bd41a663eaf2595e707d98f35d743e61f); see
+[README](README.md#conventions).
 
 ## Principles
 
@@ -35,7 +33,8 @@ change).
    its documentation in the same change. Phase notes or development notes
    explain how the system grew; stable pages distill the implemented result.
 2. **The repository is the source of truth (*Docs-as-Code*).** Documentation,
-   examples, media, build configuration, and release notes live with the code;
+   examples, media, build configuration, and changelog entries (the source of
+   release notes) live with the code;
    no wiki-only source. Unlike common Docs-as-Code setups, there is no CI
    pipeline (see principle 6).
 3. **Write for distinct audiences.** A new user, experienced operator,
@@ -61,7 +60,7 @@ change).
 |---|---|---|
 | GitHub About panel | Discovery and immediate orientation | Required |
 | Root `README.md` | Product landing page and first success | Required |
-| Documentation site | Task-oriented user and contributor documentation | Required for shipped software |
+| Documentation site | Task-oriented user and contributor documentation | Required for released software |
 | `CONTRIBUTING.md` | Contribution contract and local development | Required |
 | `SECURITY.md` | Supported versions and private reporting | Required |
 | `LICENSE` | Legal permission and conditions | Required |
@@ -276,20 +275,9 @@ The canonical machine-readable roadmap and its evidence rules follow the
 Public roadmap pages SHOULD be generated from, or mechanically checked against,
 that source rather than maintained independently.
 
-The roadmap separates observed state from aspiration. At minimum, it
-distinguishes:
-
-- **released:** available in a named release;
-- **done:** implemented, integrated, validated, and documented; awaiting release
-  or explicitly identified as an internal foundation;
-- **in progress:** active work with visible evidence;
-- **planned:** intended and sequenced work;
-- **idea:** non-committal exploration.
-
-Public pages label unreleased completed work **Done — awaiting release**.
-Implementation dependencies can use `done` outcomes; a dependency on released
-availability explicitly requires `released`. Multiple completed items may share
-a release gate. Completion does not authorize a released support claim.
+Statuses, their evidence, and dependency rules follow that standard; public
+pages label unreleased completed work **Done — awaiting release**, and
+completion does not authorize a released support claim.
 
 Items state the user outcome rather than only an internal component name.
 Dates appear only when the project is prepared to maintain them. Removed or
@@ -308,12 +296,10 @@ documentation changes, and owned follow-up work. It explains the path from
 intent to observed result; it does not narrate commits or replace stable user
 documentation.
 
-Before a roadmap item becomes `done`, reviewers reconcile code, tests,
-schemas and examples, applicable specification, development notes, user
-documentation, and item-level acceptance evidence. `released` additionally
-requires applicable release gates, publication, changelog, and release evidence.
-A disagreement is corrected or explicitly tracked; documentation MUST NOT silently redefine a contract to
-match accidental behavior.
+The `done` and `released` gates follow the roadmap standard. A disagreement
+between code and documentation is corrected or explicitly tracked;
+documentation MUST NOT silently redefine a contract to match accidental
+behavior.
 
 Generated CLI, API, schema, configuration, and machine-interface reference
 material has a local drift check. Maintained examples are executable promises
@@ -341,7 +327,7 @@ compatibility, and whether action is required.
 ## Highlights
 - The two or three changes most users will notice.
 
-## New features
+## Added
 - User-facing additions with links to documentation.
 
 ## Changed
@@ -453,7 +439,7 @@ The local deployment command:
 
 `gh-pages` contains generated output only and is never a development or review
 branch. Its documented replacement/force-push behavior is a narrow exception
-to the company prohibition on rewriting source and release branches. Never edit
+to the company prohibition on rewriting `main` and `lts/*`. Never edit
 the branch by hand. The deploy command must not expose authentication tokens in
 arguments, logs, generated files, or Git history.
 
@@ -509,20 +495,22 @@ must have drift checks against implementation.
 
 ## Minimum release documentation gate
 
-A release is not publishable until:
+A release is not publishable until the pre-publication items pass; the last
+item is checked after publication:
 
 - README status, installation, quick start, and compatibility match the
   candidate;
 - stable documentation builds cleanly and key rendered routes pass smoke tests;
-- changelog and curated release notes are complete;
+- the changelog entry (the curated release notes) is complete;
 - breaking changes include migration and rollback guidance;
 - supported versions and security policy are correct;
-- roadmap states and current-version labels are updated;
+- roadmap `done` states match the release scope and current-version labels
+  are correct (`released` follows after publication);
 - artifacts, checksums, signatures/attestations, and SBOM links match what was
   actually produced;
 - the GitHub About description and documentation link remain accurate;
 - the exact validated documentation artifact is deployed to `gh-pages`; and
-- the public site and release links are verified after publication.
+- (after publication) the public site and release links are verified.
 
 ## Authoritative references
 

@@ -94,7 +94,8 @@ Textual, a container product, or repository-specific paths mandatory.
 ## Agent briefing
 
 > Implementations of host-phase execution pass every applicable mandatory case
-> group (handover and lifecycle, bootstrap and environment, capability
-> adapters, validation and publication). Record candidate identity, platform,
-> adapter, outcome, evidence paths, and a reason for every skip. Negative cases
-> pass only when the gate refuses safely with the expected failure evidence.
+> group (handover and lifecycle, bootstrap, adapters, coverage, vulnerabilities
+> and caches, publication and cleanup, operator presentation, dry-run). Record
+> candidate identity, platform, adapter, outcome, evidence paths, and a reason
+> for every skip. Negative cases pass only when the gate refuses safely with
+> the expected failure evidence.

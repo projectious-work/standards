@@ -9,8 +9,8 @@ persisted.
 
 ## Versioning
 
-Product releases use Semantic Versioning unless a repository documents a
-different scheme. Contract versions evolve independently when their
+Product releases use Semantic Versioning 2.0.0 (`vX.Y.Z` tags; the bump follows
+the [Git standard](git-branching-and-releases.md#commit-messages)). Contract versions evolve independently when their
 compatibility lifecycle differs from the product release.
 
 Every versioned contract defines:
@@ -67,7 +67,8 @@ The classification considers behavior, validation strictness, defaults,
 ordering, performance guarantees, security policy, and persisted data—not only
 schema shape.
 
-Breaking changes require an appropriate product version, migration guidance,
+Breaking changes require a major version (or a minor version below 1.0.0),
+migration guidance,
 updated fixtures, and an explicit rollback or non-rollback statement.
 
 ## Contract verification

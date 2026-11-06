@@ -33,7 +33,7 @@ Full standard: `standards/open-source-documentation-strategy.md`. Sections:
 - Development notes and implementation consistency
 - Changelog and release notes
 - Highlights
-- New features
+- Added
 - Changed
 - Fixed
 - Breaking changes and migration

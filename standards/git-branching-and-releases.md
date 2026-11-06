@@ -20,17 +20,16 @@ company deviates from canonical *GitHub Flow* in four places only:
    integrates them on a phase branch before it reaches `main` (see
    [Specifications](#specifications)).
 
-There are no long-lived development, pre-release, or release branches.
+Besides `main`, only `lts/*` lines are long-lived; there are no development,
+pre-release, or release lines.
 
 The linked
 [software verification and release-engineering standard](software-verification-and-release-engineering.md)
 governs the evidence, tests, artifacts, and post-publication checks required
 before a merge or a tag.
 
-Terms in *italics* are
-[Semantic Anchors](https://github.com/llm-coding/Semantic-Anchors/tree/ccb05b6bd41a663eaf2595e707d98f35d743e61f)
-(commit `ccb05b6b`, 2026-10-26; adopting a later revision is a standards
-change).
+Terms in *italics* are [Semantic Anchors](https://github.com/llm-coding/Semantic-Anchors/tree/ccb05b6bd41a663eaf2595e707d98f35d743e61f); see
+[README](README.md#conventions).
 
 ## Branches
 
@@ -131,17 +130,14 @@ pass; `main` never carries an intentionally failing test.
 Specifications are written before development, following the
 [spec-driven development cycle](spec-driven-development-cycle.md).
 
-1. Write the specification version in `spec/<slug>/v<N>/` on branch
-   `spec/[<issue>-]<slug>-v<N>`.
-2. When it is approved, freeze it as the
-   [layout standard](specification-layout-and-lifecycle.md#lifecycle) defines:
-   `FREEZE.sha256`, squash merge into `main`, tag `spec/<slug>/v<N>` on the
-   merge commit. A frozen version is never edited or deleted; changes create
-   the next version on a new `spec/` branch.
-3. Implementation happens on `feat/*`, `fix/*`, or `chore/*` branches against
-   frozen versions and never changes `spec/`. Their pull requests carry one
-   `Spec: <slug>@v<N>` line per specification.
-4. A phase with separate acceptance-test and implementation tracks keeps them
+1. Specification versions follow the
+   [layout lifecycle](specification-layout-and-lifecycle.md#lifecycle):
+   branch `spec/[<issue>-]<slug>-v<N>`, freeze, squash merge, tag
+   `spec/<slug>/v<N>` on the squash commit. Frozen versions never change.
+2. Implementation branches never change `spec/`. Their pull requests carry
+   one `Spec: <slug>@v<N>` line per specification they implement (none for
+   pure chores).
+3. A phase with separate acceptance-test and implementation tracks keeps them
    on `<prefix>/<slug>-tests` and `<prefix>/<slug>-impl`, where `<slug>` names
    the phase (its roadmap item), not a specification. The integration owner
    merges them (plain merge, no squash) into the phase branch
@@ -153,23 +149,26 @@ Specifications are written before development, following the
 ## Releases and tags
 
 A release branch contains no development. It holds exactly one commit,
-`chore(release): vX.Y.Z`, which updates the changelog and the version
-metadata.
+`chore(release): vX.Y.Z`, which updates the changelog (its entry is the curated
+release notes) and the version metadata. Roadmap statuses change afterwards
+(see the [roadmap standard](product-roadmap-and-development-evidence.md)).
 
 1. Create `release/vX.Y.Z` from the tip of `main`, or of the `lts/*` line for
    an LTS release.
 2. Make the release commit and run the release gates of the
    [verification and release-engineering standard](software-verification-and-release-engineering.md).
 3. After owner approval, squash-merge the release branch.
-4. Tag the resulting commit on `main` (or `lts/*`) with `vX.Y.Z`, then publish.
+4. Tag the squash commit on `main` (or `lts/*`) with `vX.Y.Z`, then publish.
 5. Delete the release branch.
 
 If the release finds a defect, close the release pull request, fix the defect
 through `fix/*`, and cut a new release branch. Never fix on a release branch.
+A version number is reused only if nothing was tagged or published with it.
 
 Release tags MUST be annotated and SHOULD be cryptographically signed. A
 published tag MUST never be moved or reused; a mistake is repaired by a new
-version. Build metadata and release artifacts MUST identify the tagged commit.
+version. Release artifacts MUST identify the version and the approved source
+tree; the release record binds the tag and its squash commit to that tree.
 
 Prereleases use the same flow with a prerelease version, for example
 `release/v1.0.0-rc.1`. Version ordering follows Semantic Versioning 2.0.0:
@@ -180,8 +179,8 @@ alpha.N < beta.N < rc.N < final
 
 Counters start at 1 and increase monotonically within each stage. If tracked
 content changes after a release candidate, the next candidate gets a higher
-number; the final release MUST NOT silently differ from its last accepted
-candidate.
+number; the final release MUST NOT differ from its last accepted release
+candidate other than in version metadata and changelog.
 
 ## Long-term support
 
@@ -228,6 +227,16 @@ exists elsewhere. If repository settings are stricter than the documented
 project policy, stop and reconcile the setting or obtain the required GitHub
 approval; do not use an administrator bypass as the routine path.
 
+Before acting, an agent reports the branch type, source, target, and, for a
+release, the version. An unclear target is a stop condition, not permission
+to infer one. Before merging, it asks for explicit owner approval unless a
+valid approval for the exact revision is already recorded. After approval, it
+may merge, tag, and continue the authorized release sequence; publication
+that needs the host follows the
+[host-phase standard](human-controlled-host-phase-execution.md). A GitHub
+`REVIEW_REQUIRED` result means the repository settings still demand a GitHub
+review; the agent reports the policy mismatch instead of bypassing it.
+
 ## Protection and audit requirements
 
 - Repositories SHOULD protect `main` and `lts/*` branches with GitHub rulesets
@@ -240,10 +249,9 @@ approval; do not use an administrator bypass as the routine path.
   exception is the [migration from version lines](#migration-from-version-lines).
 - Restrict tagging rights to the release role or its explicitly authorized
   automation.
-- Record the release commit, tag, checks, approvals, toolchain versions, and
-  produced artifacts for every release.
-- Run releases from clean worktrees and fetch remote state immediately before
-  ancestry and tag checks.
+- Record every release as the
+  [verification standard's release record](software-verification-and-release-engineering.md)
+  defines it; fetch remote state immediately before ancestry and tag checks.
 
 ## Migration from version lines
 
@@ -266,24 +274,12 @@ repository migrates once:
 
 ## Agent briefing
 
-> Follow *GitHub Flow* with *Conventional Commits*: branch `feat/`, `fix/`,
-> `chore/`, or `spec/` from `main` as `[<issue>-]<slug>`, then squash-merge
-> back after owner approval. The squash title's type matches the prefix.
-> Releases: `release/vX.Y.Z` holds only `chore(release): vX.Y.Z`; tag the
-> squash commit. Specs live in `spec/<slug>/vN/` and freeze by merge and tag
-> `spec/<slug>/vN`. LTS lines `lts/vN` use the same flow (names `lts<N>-…`);
-> fixes land on `main` first, then `git cherry-pick -x`. Never develop on
-> `release/*`.
-
-Before acting, an agent reports the branch type, source, target, and, for a
-release, the version. An unclear target is a stop condition, not permission
-to infer one.
-
-Before merging, the agent asks for explicit owner approval unless a valid
-approval for the exact revision is already recorded. After approval, the agent
-may merge, tag, and continue the authorized release sequence. A GitHub
-`REVIEW_REQUIRED` result means the configured repository settings still demand
-a GitHub review; the agent reports the policy mismatch instead of bypassing it.
+> *GitHub Flow* with *Conventional Commits*: `feat/`, `fix/`, `chore/`, `spec/`
+> from `main` as `[<issue>-]<slug>`; unclear target: stop. Squash-merge after
+> explicit owner approval; title type matches the prefix. `release/vX.Y.Z`
+> holds only `chore(release): vX.Y.Z`; tag the squash commit. Specs: tag
+> `spec/<slug>/vN`. `lts/vN`: names `lts<N>-…`; fix `main` first, then
+> `git cherry-pick -x`. Never develop on `release/*`; never bypass protection.
 
 ## Authoritative references
 

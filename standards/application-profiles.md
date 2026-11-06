@@ -7,6 +7,9 @@ document defines applicability profiles so a CLI convention is not imposed on
 a library, and a service requirement is not imposed on a documentation-only
 repository.
 
+Terms in *italics* are [Semantic Anchors](https://github.com/llm-coding/Semantic-Anchors/tree/ccb05b6bd41a663eaf2595e707d98f35d743e61f); see
+[README](README.md#conventions).
+
 A repository declares one primary profile and any secondary profiles in its
 engineering documentation. It records justified exceptions rather than
 silently ignoring an applicable requirement.
@@ -32,6 +35,12 @@ Applies accessible interaction, local and remote state boundaries, privacy,
 error recovery, visual regression where valuable, API compatibility, and
 user-journey tests. CLI-only stream and exit-code rules do not apply unless the
 project also ships a CLI.
+
+### MCP server
+
+Applies [agent-native product interfaces](agent-native-product-interfaces.md).
+A local stdio server follows the CLI stream rules; a remote server also follows
+the Service or worker profile.
 
 ### Library or SDK
 

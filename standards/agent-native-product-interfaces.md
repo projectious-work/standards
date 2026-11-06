@@ -6,9 +6,12 @@ This standard defines how projectious.work products expose consequential
 capabilities to AI agents without making probabilistic model behavior the
 execution, authorization, or evidence boundary.
 
+Terms in *italics* are [Semantic Anchors](https://github.com/llm-coding/Semantic-Anchors/tree/ccb05b6bd41a663eaf2595e707d98f35d743e61f); see
+[README](README.md#conventions).
+
 It applies when a product provides MCP tools or another agent-facing protocol
-for validation, mutation, deployment, reconciliation, administration, or other
-bounded product operations. The read-only public documentation baseline remains
+for mutation, deployment, reconciliation, administration, or any operation that
+consumes credentials or authority or has external effects. The read-only public documentation baseline remains
 governed by
 [AI-agent accessibility and generative discovery](ai-agent-accessibility-and-generative-discovery.md).
 
@@ -48,7 +51,8 @@ MCP SHOULD be the primary agent experience when the protocol fits the product.
 The durable product boundary is nevertheless the application core of a
 *Hexagonal Architecture*, not MCP itself: MCP and CLI are peer driving adapters.
 
-The CLI remains a complete interface for direct human use, CI, diagnostics,
+The CLI remains a complete interface for direct human use, automation,
+diagnostics,
 recovery, migration, and break-glass operation. A product MAY provide another
 administrative interface, but MUST NOT require an AI client to recover or
 inspect its canonical state.
@@ -220,13 +224,9 @@ documentation server does not satisfy operational agent-interface acceptance.
 
 ## Agent briefing
 
-> Products that expose consequential operations to agents keep probabilistic
-> reasoning (goals, synthesis, proposals) apart from deterministic mechanisms
-> (validation, authority, mutation, recovery, evidence). MCP and CLI are
-> equivalent adapters over one *Hexagonal Architecture* core; the CLI stays a
-> complete recovery path. Tools have strict versioned schemas, no arbitrary
-> shell, typed results and safe next actions. Natural language, model
-> confidence, and client confirmation are never identity or approval;
-> self-approval is denied and secrets never appear in tool output. Mutations are
-> idempotent or carry a durable operation id and report partial failure
-> explicitly.
+> Keep probabilistic reasoning apart from deterministic validation, authority,
+> mutation, recovery, and evidence. MCP and CLI are peer adapters over one
+> *Hexagonal Architecture* core; the CLI stays a full recovery path. Tools have
+> strict versioned schemas, no shell, typed results. Natural language, model
+> confidence, and client confirmation are never approval; no self-approval; no
+> secrets in output. Mutations: idempotent or durable; partial failure reported.

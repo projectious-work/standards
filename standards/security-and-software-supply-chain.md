@@ -6,9 +6,12 @@ This standard defines the minimum security and dependency practices for
 projectious.work software. Projects add stronger controls according to their
 trust boundary, data sensitivity, deployment model, and release profile.
 
+Terms in *italics* are [Semantic Anchors](https://github.com/llm-coding/Semantic-Anchors/tree/ccb05b6bd41a663eaf2595e707d98f35d743e61f); see
+[README](README.md#conventions).
+
 ## Security model
 
-Every shipped application documents:
+Every released application documents:
 
 - protected assets and sensitive data;
 - trust boundaries and privileged actors;

@@ -11,24 +11,12 @@ Binding company standard. The rules below are the summary; the linked file is au
 
 ## Git branching and release standard
 
-Follow *GitHub Flow* with *Conventional Commits*: branch `feat/`, `fix/`,
-`chore/`, or `spec/` from `main` as `[<issue>-]<slug>`, then squash-merge
-back after owner approval. The squash title's type matches the prefix.
-Releases: `release/vX.Y.Z` holds only `chore(release): vX.Y.Z`; tag the
-squash commit. Specs live in `spec/<slug>/vN/` and freeze by merge and tag
-`spec/<slug>/vN`. LTS lines `lts/vN` use the same flow (names `lts<N>-…`);
-fixes land on `main` first, then `git cherry-pick -x`. Never develop on
-`release/*`.
-
-Before acting, an agent reports the branch type, source, target, and, for a
-release, the version. An unclear target is a stop condition, not permission
-to infer one.
-
-Before merging, the agent asks for explicit owner approval unless a valid
-approval for the exact revision is already recorded. After approval, the agent
-may merge, tag, and continue the authorized release sequence. A GitHub
-`REVIEW_REQUIRED` result means the configured repository settings still demand
-a GitHub review; the agent reports the policy mismatch instead of bypassing it.
+*GitHub Flow* with *Conventional Commits*: `feat/`, `fix/`, `chore/`, `spec/`
+from `main` as `[<issue>-]<slug>`; unclear target: stop. Squash-merge after
+explicit owner approval; title type matches the prefix. `release/vX.Y.Z`
+holds only `chore(release): vX.Y.Z`; tag the squash commit. Specs: tag
+`spec/<slug>/vN`. `lts/vN`: names `lts<N>-…`; fix `main` first, then
+`git cherry-pick -x`. Never develop on `release/*`; never bypass protection.
 
 Full standard: `standards/git-branching-and-releases.md`. Sections:
 

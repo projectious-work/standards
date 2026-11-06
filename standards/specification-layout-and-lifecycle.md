@@ -8,10 +8,8 @@ projectious.work repository that implements against specifications. The
 [spec-driven development cycle](spec-driven-development-cycle.md) defines how
 work proceeds against them.
 
-Terms in *italics* are
-[Semantic Anchors](https://github.com/llm-coding/Semantic-Anchors/tree/ccb05b6bd41a663eaf2595e707d98f35d743e61f)
-(commit `ccb05b6b`, 2026-10-26; adopting a later revision is a standards
-change).
+Terms in *italics* are [Semantic Anchors](https://github.com/llm-coding/Semantic-Anchors/tree/ccb05b6bd41a663eaf2595e707d98f35d743e61f); see
+[README](README.md#conventions).
 
 ## What gets a specification
 
@@ -100,14 +98,16 @@ decisions = ["ADR-7"]
 1. **Draft.** Create `spec/<slug>/v<N>/` with `status = "draft"` on branch
    `spec/[<issue>-]<slug>-v<N>`. A draft is edited freely, and only on its
    `spec/` branch.
-2. **Review.** The specification must be *test-ready*: an author who reads
+2. **Review.** The specification must be **test-ready**: an author who reads
    only this version can derive every acceptance test without reading code and
    without inventing an identifier, option, default, result field, error code,
    or supported target. The review follows the
-   [spec-driven cycle](spec-driven-development-cycle.md#4-review-the-plan-against-the-complete-baseline).
+   [spec-driven cycle](spec-driven-development-cycle.md#4-review-the-plan-against-the-complete-baseline);
+   on its small-change path, the owner's request replaces the review, but the
+   version must still be test-ready.
 3. **Freeze.** After owner approval, the last commit on the branch sets
    `status = "frozen"` and adds `FREEZE.sha256`. The branch is squash-merged
-   into `main` with the title `docs(spec): freeze <slug>@v<N>`, and the merge
+   into `main` with the title `docs(spec): freeze <slug>@v<N>`, and the squash
    commit is tagged `spec/<slug>/v<N>` by the agent or person who merged it.
    The frozen version is the contract.
 4. **Change.** A frozen version is never edited, moved, or deleted. Every
