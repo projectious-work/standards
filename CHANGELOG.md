@@ -6,6 +6,8 @@ All notable changes to the standards are listed here. The format follows
 
 ## [Unreleased]
 
+## [2.1.0] - 2026-11-07
+
 ### Changed
 
 - Resolved contradictions across the standards: release tags bind the approved
