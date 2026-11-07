@@ -211,11 +211,6 @@ Commands are tested against the maintained release. The README does not claim
 planned behavior as released behavior and does not exceed what a new reader can
 scan comfortably.
 
-The aibox README is the reference pattern for the centered logo and tagline,
-small badge set, explicit maturity note, terminal demonstration, installation,
-quick start, current-versus-future distinction, ecosystem boundary,
-documentation map, and community-file links.
-
 ## Community and policy files
 
 ### `CONTRIBUTING.md`
@@ -315,45 +310,18 @@ Every published GitHub release has a human-curated description. Generated
 notes MAY supply pull-request links and contributor credits, but they are input
 to the release note, not the final narrative.
 
-Use this release-note structure, omitting only genuinely empty optional
-sections:
-
-```markdown
-# <project> vX.Y.Z — <short outcome-oriented title>
-
-Two to four sentences summarizing who should care, the most important outcome,
-compatibility, and whether action is required.
-
-## Highlights
-- The two or three changes most users will notice.
-
-## Added
-- User-facing additions with links to documentation.
-
-## Changed
-- Behavior, compatibility, performance, or operational changes.
-
-## Fixed
-- Corrected user-visible defects, with issue links where useful.
-
-## Breaking changes and migration
-- Required actions, deprecated paths, deadlines, and migration/rollback links.
-
-## Security
-- Safe disclosure summary and advisory link; never expose an unpatched issue.
-
-## Known issues
-- Material limitations and workarounds.
-
-## Install or upgrade
-- Copyable commands and post-install version verification.
-
-## Artifacts and verification
-- Supported artifacts, checksums, signatures/attestations, SBOMs, and source tag.
-
-## Contributors
-- Credits and a link to the full comparison/changelog.
-```
+A release note has a title `<project> vX.Y.Z — <short outcome-oriented
+title>`, then two to four sentences on who should care, the most important
+outcome, compatibility, and whether action is required. Then these sections,
+omitting only genuinely empty optional ones: Highlights (the two or three
+changes most users notice); Added (with documentation links); Changed
+(behavior, compatibility, performance, operations); Fixed (user-visible, with
+issue links where useful); Breaking changes and migration (required actions,
+deprecations, deadlines, migration and rollback links); Security (safe
+disclosure summary and advisory link, never an unpatched issue); Known issues
+(with workarounds); Install or upgrade (copyable commands and version check);
+Artifacts and verification (checksums, signatures or attestations, SBOMs,
+source tag); Contributors (credits and the full comparison link).
 
 The release title and summary use product language, not an internal ticket or
 commit subject. Prereleases are marked as prereleases and explain their test
@@ -361,10 +329,6 @@ audience and support limitations. The final release links to the matching
 documentation version and migration guide. Assets have predictable names and
 include checksums; signatures, attestations, and SBOMs are published when the
 project release policy requires them.
-
-The aibox v0.30.0 release is a useful concise example: it opens with a summary,
-then categorizes additions, changes, fixes, removals, and upgrade notes instead
-of dumping commits.
 
 The documentation site's **Releases** destination provides the current stable
 version, supported lines, install/upgrade link, recent release summaries, and a
@@ -443,12 +407,6 @@ to the company prohibition on rewriting `main`, `lts/*`, and `release/*`. Never 
 the branch by hand. The deploy command must not expose authentication tokens in
 arguments, logs, generated files, or Git history.
 
-The aibox `scripts/maintain.sh docs-deploy` flow is the reference pattern: it
-builds locally, supports dry-run, copies static output into a fresh branch,
-adds `.nojekyll`, pushes `gh-pages`, configures Pages when needed, and reports
-the published URL. Projects may implement the same contract with another
-generator or script structure.
-
 ## Quality, accessibility, and maintenance
 
 Documentation is reviewed with the same seriousness as code.
@@ -514,14 +472,9 @@ item is checked after publication:
 
 ## Authoritative references
 
-- [GitHub: About READMEs](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-readmes)
-- [GitHub: Community profiles](https://docs.github.com/en/communities/setting-up-your-project-for-healthy-contributions/about-community-profiles-for-public-repositories)
-- [GitHub: Security policies](https://docs.github.com/en/code-security/how-tos/report-and-fix-vulnerabilities/configure-vulnerability-reporting/add-security-policy)
 - [GitHub: About releases](https://docs.github.com/en/repositories/releasing-projects-on-github/about-releases)
 - [GitHub: Publishing Pages from a branch](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site)
-- [GitHub: Repository topics](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/classifying-your-repository-with-topics)
-- [GitHub: Social preview](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/customizing-your-repositorys-social-media-preview)
-- [Open Source Guides: Building welcoming communities](https://opensource.guide/building-community/)
+- [GitHub: Community profiles](https://docs.github.com/en/communities/setting-up-your-project-for-healthy-contributions/about-community-profiles-for-public-repositories)
 
 ## Agent briefing
 

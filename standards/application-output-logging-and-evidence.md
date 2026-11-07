@@ -55,16 +55,10 @@ executing identities when that distinction matters to authority or audit.
 Human renderers MAY use color, tables, progress, and other decoration. Plain
 and machine renderers remain stable and deterministic.
 
-Long-running trusted gates use evidence-first events where practical: task
-start, heartbeat, output, pass, warning, skip, failure, and cleanup. An event
-is emitted only after its underlying evidence is flushed. Presentation failure
-must not rerun candidate work; a deterministic plain renderer remains
-available. TUI state, widget state, and clipboard contents are never evidence.
-
-Progress has a stable denominator and explicit pending, running, passed,
-warning, skipped, and failed states. Security-relevant layouts are tested for
-one visible frame per panel, absent empty containers, correct heading
-association, and equivalent narrow/wide semantic structure.
+Long-running trusted gates follow the
+[host-phase operator contract](human-controlled-host-phase-execution.md#operator-contract)
+for events, renderers, and progress. TUI state, widget state, and clipboard
+contents are never evidence.
 
 ## Streams and formats
 

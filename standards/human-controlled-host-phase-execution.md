@@ -171,8 +171,10 @@ output, pass, warning, skip, failure, and cleanup. Presentation consumes events
 only after underlying evidence is flushed. A TUI failure MUST NOT rerun
 candidate work and a deterministic plain renderer MUST remain available.
 Progress uses a stable denominator and explicit pending, running, passed,
-warning, skipped, and failed states. Presentation and clipboard state are not
-evidence.
+warning, skipped, and failed states. Security-relevant layouts are tested for
+one visible frame per panel, absent empty containers, correct heading
+association, and equivalent narrow and wide semantic structure. Presentation
+and clipboard state are not evidence.
 
 ## Coverage, vulnerabilities, and caches
 

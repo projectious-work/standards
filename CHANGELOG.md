@@ -22,6 +22,11 @@ All notable changes to the standards are listed here. The format follows
 - Condensed duplicated rules into references (Git spec and release record,
   host-phase coverage, documentation roadmap section, test-ready definition)
   and shortened several agent briefings without changing rules.
+- Shortened the release-note template to one paragraph, removed the aibox
+  example paragraphs and non-normative reference links, merged two
+  AI-accessibility principles into the MCP tools section, moved TUI layout
+  tests into the host-phase operator contract, and reduced the communication
+  pre-send check to a reference to its rules.
 
 ## [2.0.0] - 2026-11-06
 

@@ -104,11 +104,9 @@ follows this standard.
 
 ## Pre-send check
 
-Before sending, delete a first sentence that announces what comes next, a last
-sentence that recaps or asks "anything else?", any "by the way" sidebar, and
-any hedge or idiom that carries no information. Then check: from the first and
-the last line alone, does the reader know what to do next and what just
-happened? If yes, send.
+Before sending, apply rules 7, 10, and 11 once more. Then check: from the
+first and the last line alone, does the reader know what just happened and
+what to do next? If yes, send.
 
 ## Origin
 
