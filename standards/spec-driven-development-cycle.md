@@ -94,8 +94,8 @@ makes observable, acceptance journeys, schemas, fixtures, and examples. A
 roadmap phase is covered by the specification versions of its features. Owner
 decisions a specification depends on are made here, not during
 implementation. While drafting, the agent asks why each requested attribute
-matters until the owner's goal is clear (*Laddering (Interview Technique)*)
-and records that goal in `overview.md`.
+matters until the owner's goal is clear (*Laddering (Interview Technique)*),
+batching the questions per round, and records that goal in `overview.md`.
 
 A specification version that is not **test-ready**, as the
 [layout standard](specification-layout-and-lifecycle.md#lifecycle) defines it,

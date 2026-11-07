@@ -36,19 +36,23 @@ go to stdout and compose through pipes, and success is quiet unless output is
 requested.
 
 1. `-h` and `--help` show help and ignore other arguments; help opens with
-   examples. A command without required arguments shows short help.
+   examples. A command that requires arguments and gets none shows short help
+   and fails with a usage exit code.
 2. `--version` prints the version. `-v` never means version.
 3. Every option has a long name; one-letter forms are reserved for frequent
    options. Reused names keep their common meaning: `--all`, `--force`,
-   `--dry-run`, `--output`, `--quiet`, `--verbose`, `--json`, `--no-input`,
-   `--no-color`.
+   `--dry-run`, `--quiet`, `--verbose`, `--no-input`, `--no-color`.
 4. Options are preferred to positional arguments. Positional arguments carry
    only the primary inputs or names of the command.
 5. `--` ends option parsing; `-` as an operand means stdin or stdout.
-6. Human output is the default and is not a contract. Scripts use the machine
-   format, which is the stable contract.
-7. Secrets are never accepted as option values; read them from a file, stdin,
-   or the credential store.
+6. Human output is the default; its wording and layout are not a contract,
+   but its stream assignment and exit codes are. Scripts use the machine
+   format, selected by the style's format option. It emits the versioned
+   envelope of the
+   [compatibility standard](compatibility-and-machine-interfaces.md#machine-readable-results);
+   a raw resource dump is a payload inside that envelope.
+7. Secrets are never accepted as option values; their sources follow the
+   [security standard](security-and-software-supply-chain.md#secrets-and-sensitive-data).
 8. The CLI prompts only when stdin is a terminal. `--no-input` disables every
    prompt. Destructive commands offer `--dry-run`, confirm in proportion to
    the damage (typing the resource name for irreversible actions), and accept
@@ -68,7 +72,7 @@ Source: POSIX Utility Syntax Guidelines and the GNU Coding Standards.
   and `--opt=value` are all accepted.
 - Inputs are positional operands; outputs are named with `-o`/`--output`, not
   positionally.
-- Options precede operands; accepting options between operands is allowed.
+- Options precede operands; GNU-style interleaving MAY be accepted.
   Order between options does not matter, except for repeated and mutually
   exclusive options.
 - `-n` MAY mean `--dry-run`, as in common utilities.
@@ -112,8 +116,10 @@ Source: OpenStackClient Human Interface Guide.
 - Command options are long-only, lowercase, and hyphen-separated. Repeated
   values repeat the option (`--property a=1 --property b=2`); booleans are
   pairs (`--enable`/`--disable` or `--x`/`--no-x`); timestamps use ISO 8601.
-- Every global option has an environment-variable equivalent; the command
-  line wins.
+- Global options map to environment variables under the
+  [configuration standard's](application-configuration.md#precedence)
+  precedence and authority rules; secret-bearing or authority-restricted
+  options have no environment equivalent.
 - `list` and `show` select output with `-f`/`--format`; the default is a
   table.
 
@@ -123,5 +129,5 @@ Source: OpenStackClient Human Interface Guide.
 > [operands]`, B verb–resource `tool <verb> <type> [<name>]` (kubectl), or C
 > object–action `tool <object> <action>` (OpenStackClient). All follow the
 > *Unix Philosophy* and the baseline: `--help` with examples, `--version`,
-> long names for all options, `--` and `-`, machine format as contract, no
+> long names for all options, `--` and `-`, machine envelope as contract, no
 > secrets in options, prompts only on a TTY, `--dry-run` for destructive use.

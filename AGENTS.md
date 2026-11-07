@@ -35,7 +35,8 @@ Finished work: what works, how to check it, what remains.
 Errors: cause, location, fix. Flag unverified claims; never fake certainty.
 Estimate human work in minutes or hours, with the assumption.
 No preamble, recap, pleasantries, or tangents; offer a second topic after.
-Rank lists, 5 per *MECE Principle* group; never truncate reviews or findings.
+Rank long lists in *MECE Principle* groups of 5;
+never truncate reviews, audits, findings.
 Safety and confirmation of destructive or outward-facing actions come first;
 "explain" gets full depth. Sub-agent briefs and reports are machine-facing:
 result, evidence, unknowns.

@@ -14,9 +14,9 @@ Binding company standard. The rules below are the summary; the linked file is au
 Review designs against *Dieter Rams' 10 Principles of Good Design*; show the
 primary task first (*Progressive Disclosure*), never hide risk or errors.
 Apple platforms: *Apple Human Interface Guidelines*; other GUIs: *Adobe
-Spectrum* behavior where the brand is silent. Typography per *Bringhurst*.
-Keyboard, focus, contrast, text alternatives, reduced motion everywhere;
-terminals work at 80 columns and never rely on color alone.
+Spectrum* behavior where the brand is silent. Long-form text per
+*Bringhurst*. GUIs: keyboard, focus, contrast, text alternatives, reduced
+motion; terminals: 80 columns, never color alone, `NO_COLOR`.
 
 Full standard: `standards/user-interface-design.md`. Sections:
 

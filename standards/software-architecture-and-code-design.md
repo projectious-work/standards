@@ -45,13 +45,13 @@ are details behind interfaces.
 ## Modules
 
 - Cut the core along bounded contexts (*Domain-Driven Design according to
-  Evans*, tactical patterns). Use one Ubiquitous Language (*Domain-Driven
-  Design according to Evans*): the same terms in specification, code, tests,
-  CLI output, and documentation.
+  Evans*, tactical patterns). Use one Ubiquitous Language: the same terms in
+  specification, code, tests, CLI output, and documentation.
 - Modules are *Deep Modules*: a small interface over substantial behavior.
   Do not split code into shallow pass-through layers.
-- Module and repository boundaries follow ownership (*Conway's Law*): one
-  owner per module, one concern per repository.
+- Module boundaries follow ownership, because the structure will mirror the
+  owning teams (*Conway's Law*): one owner per module. A repository holds one
+  concern.
 - Modules are feature-centric and own their data and state. They communicate
   only through explicit module APIs and never reach into another module's
   internal types, tables, or files.

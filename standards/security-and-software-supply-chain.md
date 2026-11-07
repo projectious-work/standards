@@ -29,9 +29,11 @@ instructions.
 ## Input, filesystem, and process safety
 
 Applications validate untrusted structured input, versions, sizes, paths,
-archives, URLs, and encodings at the trust boundary (*Defensive Programming
+archives, URLs, and encodings wherever untrusted data enters, and again
+before use in a filesystem or process operation (*Defensive Programming
 according to McConnell*; see the
-[architecture standard](software-architecture-and-code-design.md#code-conventions)). File operations account for traversal,
+[architecture standard](software-architecture-and-code-design.md#code-conventions)).
+File operations account for traversal,
 symlinks, special files, permissions, partial writes, and races.
 
 Programs invoking external tools preserve argument boundaries and avoid a shell
@@ -113,7 +115,8 @@ are never moved; corrected versions are released normally.
 
 ## Agent briefing
 
-> Identify the trust boundary before coding. Preserve argument and path
-> boundaries, redact before data leaves the core, review every direct
-> dependency, and verify the final published artifact rather than trusting the
-> source build alone.
+> Identify the trust boundary before coding; model abuse with *STRIDE* and
+> check web interfaces against the *OWASP Top 10*. Validate untrusted input
+> where it enters and before filesystem or process use. Preserve argument and
+> path boundaries, redact before data leaves the core, review every direct
+> dependency, and verify the final published artifact, not only the build.

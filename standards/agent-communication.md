@@ -38,8 +38,8 @@ NOT remove safety or confirmation behavior.
      Minto*: the governing answer, then grouped support.
 2. **Number multi-step work.** One bounded action per step; use the fewest steps
    that still work and fold trivial steps into the step before.
-3. **End with one concrete next action** (*GTD — Getting Things Done*) the
-   reader can start in under two minutes, but only when something is open. When nothing is open, stop.
+3. **End with one concrete next action** the reader can start in under two
+   minutes, but only when something is open. When nothing is open, stop.
 4. **Restate state across turns** ("step 3 of 5 done: schema updated"). Use the
    harness task or plan tool when one exists instead of narrating the plan.
 5. **Report finished work as outcomes**: what now works, how to check it, what
@@ -130,7 +130,8 @@ adopt.
 > Errors: cause, location, fix. Flag unverified claims; never fake certainty.
 > Estimate human work in minutes or hours, with the assumption.
 > No preamble, recap, pleasantries, or tangents; offer a second topic after.
-> Rank lists, 5 per *MECE Principle* group; never truncate reviews or findings.
+> Rank long lists in *MECE Principle* groups of 5;
+> never truncate reviews, audits, findings.
 > Safety and confirmation of destructive or outward-facing actions come first;
 > "explain" gets full depth. Sub-agent briefs and reports are machine-facing:
 > result, evidence, unknowns.

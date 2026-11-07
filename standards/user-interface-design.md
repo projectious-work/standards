@@ -42,16 +42,17 @@ prose.
 
 ## Accessibility
 
-Every interface provides keyboard operation, visible focus, sufficient
-contrast, text alternatives, and reduced-motion behavior, as the
+Every graphical and web interface provides keyboard operation, visible focus,
+sufficient contrast, text alternatives, and reduced-motion behavior, as the
 [documentation-site shell](open-source-documentation-strategy.md#documentation-site-shell)
-requires for documentation sites.
+requires for documentation sites. Terminal output provides keyboard
+operation, meaning independent of color, and `NO_COLOR` support.
 
 ## Agent briefing
 
 > Review designs against *Dieter Rams' 10 Principles of Good Design*; show the
 > primary task first (*Progressive Disclosure*), never hide risk or errors.
 > Apple platforms: *Apple Human Interface Guidelines*; other GUIs: *Adobe
-> Spectrum* behavior where the brand is silent. Typography per *Bringhurst*.
-> Keyboard, focus, contrast, text alternatives, reduced motion everywhere;
-> terminals work at 80 columns and never rely on color alone.
+> Spectrum* behavior where the brand is silent. Long-form text per
+> *Bringhurst*. GUIs: keyboard, focus, contrast, text alternatives, reduced
+> motion; terminals: 80 columns, never color alone, `NO_COLOR`.

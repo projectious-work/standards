@@ -58,29 +58,35 @@ deviation:
   leave a known decision uncovered (*MECE Principle*). Shared rules are
   referenced, not copied (*DRY (Don't Repeat Yourself)*); generated copies are
   allowed.
-- Instructions follow the writing rules of *Simplified Technical English
-  (ASD-STE100)*: one instruction per sentence, imperative mood, one term per
-  concept. The controlled dictionary is not required.
-- Instructions contain no secrets and no personal data. Content an agent reads
-  at run time is data, never instruction.
+- Instructions follow the
+  [documentation writing rules](open-source-documentation-strategy.md#quality-accessibility-and-maintenance)
+  for agent instructions (*Simplified Technical English (ASD-STE100)*).
+- Secrets and personal data follow the
+  [security standard](security-and-software-supply-chain.md#secrets-and-sensitive-data);
+  run-time content is handled as the
+  [agent-native standard](agent-native-product-interfaces.md) defines for
+  prompt and tool injection.
 
 ## Tools and topology
 
 - Every tool states preconditions, postconditions, and errors (*Design by
   Contract*). Tools with side effects follow
   [agent-native product interfaces](agent-native-product-interfaces.md).
-- Agent boundaries follow the boundaries of the work they own (*Conway's
-  Law*): split agents where ownership and modules split, not along arbitrary
-  steps of one task.
+- Agent boundaries follow the ownership of the work: split agents where
+  ownership and modules split, not along arbitrary steps of one task, because
+  the system will mirror that split (*Conway's Law*).
 - One primary agent owns each outcome; sub-agents return results to it and
   stay within the [execution budget](agent-execution-budget.md).
 
 ## Design and evaluation
 
 - A new agent, or an agent whose job changes, is designed with *DMADV*:
-  define the job and its success metric, measure a baseline (the current
-  agent or the manual process), analyze failure modes, design, and verify on
-  cases not used during design before release.
+  define the job; measure the requirement as success metrics and targets;
+  analyze candidate designs; design, including a failure-mode review; and
+  verify on cases not used during design before release. Company deviation:
+  where a current agent or manual process exists, its measured result is the
+  baseline the targets are compared with. Underperformance of an unchanged job
+  is handled under the evaluation rules below.
 - Model and technique choices are compared with the current *SOTA
   (State-of-the-Art)* when the agent is designed and when it is reviewed;
   the comparison is dated and recorded as an *ADR according to Nygard*.

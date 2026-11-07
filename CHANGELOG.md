@@ -28,12 +28,18 @@ All notable changes to the standards are listed here. The format follows
   ISO/IEC 25010, SOTA (architecture); Chesterton's Fence (refactoring);
   50/72 Rule (commits, titles up to 72 characters); OWASP Top 10 (security);
   Plain Language, ASD-STE100, Progressive Disclosure, MECE (documentation);
-  Pyramid Principle, MECE, GTD, Plain Language (communication); Unix
+  Pyramid Principle, MECE, Plain Language (communication); Unix
   Philosophy (CLI design); Laddering, MECE tasks, ISO/IEC 25010, PDCA
   (spec-driven cycle).
 
 ### Changed
 
+- Squash-merge titles may not exceed 72 characters (*50/72 Rule*); before,
+  there was no limit.
+- Refactoring procedure gains a *Chesterton's Fence* step (steps renumbered
+  2–7). Untrusted input is validated where it enters and again before
+  filesystem or process use. Security, refactoring, and documentation
+  briefings name their new rules.
 - Semantic Anchors catalog pin moved to `6554641a` (2026-11-06); anchor names
   aligned with catalog titles (SOLID Principles, Test Double (Meszaros),
   Domain-Driven Design according to Evans).

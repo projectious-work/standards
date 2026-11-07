@@ -32,7 +32,7 @@ Each CLI picks one recorded style (ADR): A Unix utility `tool [opts]
 [operands]`, B verb–resource `tool <verb> <type> [<name>]` (kubectl), or C
 object–action `tool <object> <action>` (OpenStackClient). All follow the
 *Unix Philosophy* and the baseline: `--help` with examples, `--version`,
-long names for all options, `--` and `-`, machine format as contract, no
+long names for all options, `--` and `-`, machine envelope as contract, no
 secrets in options, prompts only on a TTY, `--dry-run` for destructive use.
 
 Full standard: `standards/command-line-interface-design.md`. Sections:

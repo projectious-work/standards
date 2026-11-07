@@ -50,7 +50,8 @@ Terms in *italics* are [Semantic Anchors](https://github.com/llm-coding/Semantic
 
 ## Agent briefing
 
-> Name the *Code Smells*, secure behavior with characterization tests, apply
-> *Refactoring Catalog* steps one at a time with green tests at every commit,
-> use the *Mikado Method* for large changes, limit scope by the *Boy Scout
-> Rule*, and keep behavior changes out of `refactor:` commits.
+> Name the *Code Smells*, learn why code exists (*Chesterton's Fence*), secure
+> behavior with characterization tests, apply *Refactoring Catalog* steps one
+> at a time with green tests at every commit, use the *Mikado Method* for large
+> changes, extract *Deep Modules*, limit scope by the *Boy Scout Rule*, and
+> keep behavior changes out of `refactor:` commits.

@@ -32,7 +32,7 @@ Open work follows *GTD — Getting Things Done*:
   roadmap item, or pull request), never only into chat history or agent
   memory.
 - **Clarify:** each open item has one concrete next action and an owner.
-- **Review:** open issues, pull requests, and roadmap items are reviewed at
+- **Reflect:** open issues, pull requests, and roadmap items are reviewed at
   least weekly; stale items are closed, rescheduled, or reassigned.
 
 ## Knowledge
