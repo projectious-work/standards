@@ -16,10 +16,8 @@ Repositories requiring native-host, container-engine, signing, or publication
 authority also apply the
 [human-controlled host-phase execution standard](human-controlled-host-phase-execution.md).
 
-Terms in *italics* are
-[Semantic Anchors](https://github.com/llm-coding/Semantic-Anchors/tree/ccb05b6bd41a663eaf2595e707d98f35d743e61f)
-(commit `ccb05b6b`, 2026-10-26; adopting a later revision is a standards
-change).
+Terms in *italics* are [Semantic Anchors](https://github.com/llm-coding/Semantic-Anchors/tree/ccb05b6bd41a663eaf2595e707d98f35d743e61f); see
+[README](README.md#conventions).
 
 ## Release identity and chain of custody
 
@@ -95,11 +93,12 @@ trigger or skipped with a reason. A publisher revalidates that partition.
 - the complete supported test and compatibility matrix;
 - dependency, license, vulnerability, and secret review;
 - schemas, examples, generated references, and golden output;
-- documentation build, links, migration, changelog, and roadmap consistency;
+- documentation build, links, migration, changelog, and roadmap consistency
+  (`done` items match the release scope);
 - clean-room or integration evidence for public extension contracts;
 - builds for every supported release target.
 
-### Release candidate
+### Candidate artifacts
 
 Tests run against the exact candidate artifacts where practical, not only the
 source tree. Candidate evidence records toolchain versions, skips, reruns,
@@ -166,7 +165,8 @@ Test doubles and fixtures remain legitimate inside test code.
 
 ## Release artifacts and provenance
 
-Releases originate from clean worktrees and the exact annotated release tag.
+Releases originate from clean worktrees. The annotated release tag is created
+on the squash commit, and its tree MUST equal the approved candidate tree.
 Repositories publish the artifacts appropriate to their profile plus:
 
 - checksums;
@@ -176,11 +176,12 @@ Repositories publish the artifacts appropriate to their profile plus:
 - SBOMs and signatures or attestations when required by the security profile.
 
 Build metadata identifies product version, source commit, toolchain, and
-supported contract versions. Published tags are immutable.
+supported contract versions.
 
 ## Release record
 
-The release record includes source SHA, target branches, intended version,
+The release record includes the release-branch commit, squash commit, tag,
+approved tree, target branches, intended version,
 approvals, checks, tool versions, artifacts, hashes, warnings, and
 post-publication verification. Warnings requiring judgment are acknowledged
 explicitly; release gates fail closed on errors.
@@ -203,7 +204,6 @@ implementation language is not required.
 
 ## Agent briefing
 
-> Verify a release branch before its squash merge and tag that commit. Select
-> checks by product
-> profile and change risk, verify exact candidate artifacts, and independently
-> verify what was published.
+> Verify a release branch before its squash merge and tag the squash commit.
+> Select checks by product profile and change risk, verify exact candidate
+> artifacts, and independently verify what was published.

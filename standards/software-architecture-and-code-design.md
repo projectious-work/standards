@@ -8,11 +8,8 @@ documented. It applies to applications with domain logic and external
 integrations — CLIs, services, workers, and MCP servers. Libraries apply the
 inner rules and leave composition to their host.
 
-Terms in *italics* are
-[Semantic Anchors](https://github.com/llm-coding/Semantic-Anchors/tree/ccb05b6bd41a663eaf2595e707d98f35d743e61f)
-(commit `ccb05b6b`, 2026-10-26; adopting a later revision is a standards
-change): their
-established meaning applies; deviations are stated inline.
+Terms in *italics* are [Semantic Anchors](https://github.com/llm-coding/Semantic-Anchors/tree/ccb05b6bd41a663eaf2595e707d98f35d743e61f); see
+[README](README.md#conventions).
 
 ## Principles
 

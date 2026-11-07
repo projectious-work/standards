@@ -7,6 +7,9 @@ knowledge and capabilities accessible to AI agents. It complements the
 [open-source documentation strategy](open-source-documentation-strategy.md)
 with three supported access paths:
 
+Terms in *italics* are [Semantic Anchors](https://github.com/llm-coding/Semantic-Anchors/tree/ccb05b6bd41a663eaf2595e707d98f35d743e61f); see
+[README](README.md#conventions).
+
 1. canonical AI-readable product documentation;
 2. public generative-discovery surfaces; and
 3. a readily usable Model Context Protocol (MCP) server.
@@ -15,7 +18,7 @@ The standard applies to public software, libraries, themes, specifications,
 design systems, and other released technical products. It governs product
 consumption, not repository operation. Agent contribution instructions,
 repository mutation, internal context, development governance, and provider
-harness integration remain the responsibility of processkit.
+harness integration are outside this standard.
 
 ## Principles
 
@@ -25,18 +28,14 @@ harness integration remain the responsibility of processkit.
    duplicated facts.
 2. **Documentation remains independently useful.** An agent must not need an
    MCP client to install, understand, or use the product.
-3. **MCP adds structured access.** The mandatory MCP baseline provides
-   discoverable, read-only resources. Tools are added only when they provide
-   meaningful product functionality beyond returning documents.
+3. **MCP adds structured access** through read-only resources; tools follow
+   [Optional MCP product tools](#optional-mcp-product-tools).
 4. **Released facts only.** Maturity, versions, compatibility, limitations,
    security boundaries, and examples match the released implementation.
 5. **Open formats and stable identifiers.** Prefer Markdown, semantic HTML,
    JSON Schema, and stable canonical URLs over JavaScript-only presentation or
    proprietary agent formats.
-6. ***Principle of Least Privilege* and explicit authority.** Product access does not grant
-   permission to change a repository or external system. Mutating tools require
-   an explicit product need, authorization design, and human control.
-7. **Version alignment is a release property.** AI-facing surfaces are checked
+6. **Version alignment is a release property.** AI-facing surfaces are checked
    and published with the product version they describe.
 
 ## Required access paths
@@ -128,10 +127,14 @@ part of the product contract. A remotely hosted transport MAY additionally be
 offered.
 
 The resource server MUST NOT expose private company context, credentials,
-unpublished plans, processkit entities, maintainer-only operations, or arbitrary
+unpublished plans, repository-operations records, maintainer-only operations,
+or arbitrary
 repository file access.
 
 ## Optional MCP product tools
+
+Tools follow the *Principle of Least Privilege*: product access does not grant
+permission to change a repository or external system.
 
 A project SHOULD expose MCP tools when they add safe, meaningful product
 functionality, such as validating configuration, generating a starter file,
@@ -148,12 +151,15 @@ Any tool with side effects MUST additionally define:
 
 - the affected system, data, and reversibility;
 - least-privilege authentication and authorization;
-- confirmation and human-control expectations;
+- product-verified approval and human-control expectations (client
+  confirmation is not approval; see Agent-native product interfaces);
 - secret, personal-data, logging, and retention behavior;
 - timeouts, retries, idempotency, and partial-failure behavior; and
 - security tests appropriate to its capability.
 
-Consequential MCP tools MUST also conform to
+Side-effect-free tools (validation, returning generated content) need only the
+schema and deterministic-error rules above. Consequential MCP tools MUST also
+conform to
 [Agent-native product interfaces](agent-native-product-interfaces.md), which
 defines the shared application-core, CLI-parity, capability, authorization,
 durable-operation, prompt/tool-safety, and recovery contract. The mandatory
@@ -161,8 +167,10 @@ read-only resource-server baseline in this document does not by itself make a
 product operationally agent-native.
 
 Remote protected servers MUST follow the current MCP authorization and
-transport requirements. A project MUST NOT add a write-capable tool merely to
-satisfy this standard.
+transport requirements and the remote-transport rules of Agent-native product
+interfaces. A project MUST NOT add a write-capable tool merely to
+satisfy this standard; a mutating tool requires an explicit product need,
+authorization design, and human control.
 
 ## Project manifest and shared implementation
 
@@ -221,16 +229,12 @@ gap visibly until it is resolved.
   governs operational MCP tools and equivalent CLI workflows.
 - [Software verification and release engineering](software-verification-and-release-engineering.md)
   governs release evidence and validation depth.
-- processkit governs repository operability for AI agents and is deliberately
-  outside this standard.
+- Repository operability for AI agents is deliberately outside this standard.
 
 ## References
 
 - [The `llms.txt` proposal](https://llmstxt.org/)
-- [Model Context Protocol server concepts](https://modelcontextprotocol.io/docs/learn/server-concepts)
 - [Robots Exclusion Protocol, RFC 9309](https://www.rfc-editor.org/rfc/rfc9309.html)
-- [Google guidance for AI features and websites](https://developers.google.com/search/docs/appearance/ai-features)
-- [Generative Engine Optimization research](https://arxiv.org/abs/2311.09735)
 
 ## Agent briefing
 

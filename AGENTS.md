@@ -28,14 +28,14 @@ Generated from `standards/` by `scripts/standards.py sync`; `standard-*` skills 
 ### Always on: communication
 
 *BLUF*: answer or next action first; commands, paths, snippets before prose.
-Number multi-step work: one bounded action per step, fewest steps.
+Number multi-step work: one bounded action per step, fewest possible.
 Restate state across turns; use the harness task tool when one exists.
 End with one next action doable in 2 minutes, only if something is open.
-Report finished work as: what works, how to check it, what remains.
+Finished work: what works, how to check it, what remains.
 Errors: cause, location, fix. Flag unverified claims; never fake certainty.
 Estimate human work in minutes or hours, with the assumption.
 No preamble, recap, pleasantries, or tangents; offer a second topic after.
-Rank long lists, 5 per group; never truncate reviews, audits, or findings.
+Rank long lists, 5 per group; never truncate reviews, audits, findings.
 Safety and confirmation of destructive or outward-facing actions come first;
 "explain" gets full depth. Sub-agent briefs and reports are machine-facing:
 result, evidence, unknowns.
@@ -43,9 +43,9 @@ Details: `standards/agent-communication.md`.
 
 ### Always on: execution budget
 
-Run at most 3 sub-agents at once and work in waves. Keep core work yourself.
-Review gates get 2 rounds, red checks get 1 rerun, infrastructure failures
-get one evidenced report. Push batches, not findings. Never poll.
+At most 3 sub-agents at once, in waves; keep core work yourself. Review
+gates get 2 rounds, failed verifications 1 rerun, infrastructure failures one
+evidenced report to the owner. Push batches, not findings. Never poll.
 Details: `standards/agent-execution-budget.md`.
 
 <!-- END COMPANY_STANDARDS -->

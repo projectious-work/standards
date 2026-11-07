@@ -6,6 +6,9 @@ This standard separates requested results, operational diagnostics, and
 durable domain evidence. It applies to command-line applications, services,
 workers, and user-facing applications according to their application profile.
 
+Terms in *italics* are [Semantic Anchors](https://github.com/llm-coding/Semantic-Anchors/tree/ccb05b6bd41a663eaf2595e707d98f35d743e61f); see
+[README](README.md#conventions).
+
 ## Three information channels
 
 1. **Application output** communicates the result requested by a person or
@@ -18,8 +21,9 @@ These channels MAY share an internal event model but MUST have distinct
 contracts and retention.
 
 Operational logs follow *Twelve-Factor App* factor XI: an application writes
-log events as an unbuffered stream (stdout for services and workers, stderr for
-CLIs), and the environment collects, routes, and retains them. Logs may be
+log events as an unbuffered stream (stdout for services, workers, and remote
+MCP servers; stderr for CLIs and stdio MCP servers, whose stdout carries only
+the protocol), and the environment collects, routes, and retains them. Logs may be
 rotated, sampled, or lost, so nothing may depend on them as proof. Whatever must
 survive that, to support recovery or audit or to answer "what exactly
 happened", is evidence: the application writes it deliberately to its own store
@@ -51,16 +55,10 @@ executing identities when that distinction matters to authority or audit.
 Human renderers MAY use color, tables, progress, and other decoration. Plain
 and machine renderers remain stable and deterministic.
 
-Long-running trusted gates use evidence-first events where practical: task
-start, heartbeat, output, pass, warning, skip, failure, and cleanup. An event
-is emitted only after its underlying evidence is flushed. Presentation failure
-must not rerun candidate work; a deterministic plain renderer remains
-available. TUI state, widget state, and clipboard contents are never evidence.
-
-Progress has a stable denominator and explicit pending, running, passed,
-warning, skipped, and failed states. Security-relevant layouts are tested for
-one visible frame per panel, absent empty containers, correct heading
-association, and equivalent narrow/wide semantic structure.
+Long-running trusted gates follow the
+[host-phase operator contract](human-controlled-host-phase-execution.md#operator-contract)
+for events, renderers, and progress. TUI state, widget state, and clipboard
+contents are never evidence.
 
 ## Streams and formats
 

@@ -1,10 +1,11 @@
-# Spec-driven development-cycle standard
+# Spec-driven development cycle standard
 
 ## Purpose and scope
 
 This standard defines how projectious.work implements a feature, fix, or
 roadmap phase against frozen specification versions. It applies when a
-repository has normative specifications.
+repository has normative specifications. "Phase" below means the roadmap item
+being implemented, whether a feature or a phase of several features.
 
 Where specifications live, what a version contains, and how versions are
 frozen and changed is defined in the
@@ -16,10 +17,8 @@ A repository adopting this standard, or a later revision of it, names the
 first phase it applies to. Phases completed before that point are not reopened
 or re-gated; their evidence stands as recorded.
 
-Terms in *italics* are
-[Semantic Anchors](https://github.com/llm-coding/Semantic-Anchors/tree/ccb05b6bd41a663eaf2595e707d98f35d743e61f)
-(commit `ccb05b6b`, 2026-10-26; adopting a later revision is a standards
-change).
+Terms in *italics* are [Semantic Anchors](https://github.com/llm-coding/Semantic-Anchors/tree/ccb05b6bd41a663eaf2595e707d98f35d743e61f); see
+[README](README.md#conventions).
 
 ## Small-change path
 
@@ -29,7 +28,9 @@ cycle. The agent:
 
 1. creates the next specification version of the affected feature (or its
    `v1`, if none exists) on its own `spec/` branch and freezes it; the owner's
-   request is the approval;
+   request approves its content, the squash merge follows the
+   [Git standard](git-branching-and-releases.md#approval-and-merge-authority),
+   and the version must still be test-ready;
 2. implements the change against that version, with the affected tests, on a
    `feat/` or `fix/` branch;
 3. decides open details with sensible defaults and lists them afterwards.
@@ -94,10 +95,9 @@ roadmap phase is covered by the specification versions of its features. Owner
 decisions a specification depends on are made here, not during
 implementation.
 
-A specification version is *test-ready* when an author who reads only that
-version can derive every acceptance test without reading code and without
-inventing an identifier, option, default, result field, error code, or
-supported target. A version that is not test-ready blocks approval.
+A specification version that is not **test-ready**, as the
+[layout standard](specification-layout-and-lifecycle.md#lifecycle) defines it,
+blocks approval.
 
 ## 1. Build requirement, dependency, and risk inventories
 
@@ -131,7 +131,8 @@ The plan covers specification conformance work as well as feature code.
 
 Use the parallelism justified by the task graph, ownership boundaries, and
 integration cost, within the limits of the
-[agent execution budget standard](agent-execution-budget.md). The plan
+[agent execution budget standard](agent-execution-budget.md); its cap counts
+both tracks and all work packages together. The plan
 records:
 
 - independent work packages;
@@ -149,7 +150,9 @@ agent is preferred when tasks depend on one evolving shared mental model.
 
 ## 4. Review the plan against the complete baseline
 
-A reviewer other than the primary plan author checks the draft against every
+Within the review-round limit of the
+[agent execution budget](agent-execution-budget.md), a reviewer other than the
+primary plan author checks the draft against every
 applicable specification file, normative requirement, schema, maintained
 example, acceptance journey, decision, and company standard.
 
@@ -208,7 +211,7 @@ is a separate session or sub-agent.
 - **Acceptance-test track.** A fresh agent session, with no conversation
   history, works in its own worktree created from the frozen specification
   versions and commits to a tests-only branch. Its input is the contract, the
-  applicable acceptance journeys, and the test harness at the contract commit.
+  applicable acceptance journeys, and the test harness at the freeze commit (§5).
   It does not read implementation branches and receives no implementation
   reasoning. Its tests exercise only public interfaces and name the requirement
   or acceptance ID each test verifies.
@@ -224,16 +227,16 @@ integration owner then runs the integration loop:
 1. Merge both branches onto the phase branch (see the
    [Git branching standard](git-branching-and-releases.md#specifications))
    and run the acceptance tests. Both tracks keep working on their own
-   branches; neither reads the integration branch while the barrier lasts.
+   branches; neither reads the phase branch while the barrier lasts.
 2. Classify every failure and record the classification in the cycle record:
-   - *implementation defect:* returned to the implementation track as expected
+   - **implementation defect:** returned to the implementation track as expected
      versus observed behavior in contract terms, never as test source;
-   - *test defect:* the test contradicts the contract; returned to the
+   - **test defect:** the test contradicts the contract; returned to the
      acceptance-test track with the test ID, the specification reference, and
      the rationale, never with implementation details;
-   - *contract defect:* the contract is ambiguous or wrong; affected work
+   - **contract defect:** the contract is ambiguous or wrong; affected work
      stops and §7 applies;
-   - *infrastructure failure:* handled under the
+   - **infrastructure failure:** handled under the
      [agent execution budget](agent-execution-budget.md) rerun rule.
 3. Repeat until every acceptance test passes without skips. A test changes
    only through the test-defect route and is never weakened to make it pass.
@@ -309,7 +312,8 @@ A phase is complete only when these items hold (its *Definition of Done*):
   executable contracts;
 - user documentation describes observed behavior;
 - the development note captures decisions, deviations, and validation;
-- roadmap status and evidence links are updated;
+- roadmap evidence links are updated (the status follows in a separate
+  `chore/` pull request, see the roadmap standard);
 - changelog and release material are updated where applicable; and
 - follow-up work has explicit ownership and location.
 
@@ -331,8 +335,8 @@ accepted baseline changes, gap closures, and completion approval.
 ## Agent briefing
 
 > Baseline frozen, test-ready specification versions for every feature, map
-> each normative requirement, plan, and review independently. Write acceptance
-> tests in a fresh session from the specifications only; implement in parallel
-> without seeing them; loop until all pass, classifying each failure. Verify
-> against the same baseline. No requirement disappears and no specification
-> changes silently; small direct changes first freeze the next version.
+> each normative requirement, plan, and review independently. For user-facing
+> behavior, write acceptance tests in a fresh session from the specifications
+> only; implement in parallel without seeing them; loop until all pass,
+> classifying each failure. Verify against the same baseline. No requirement
+> disappears or changes silently; small changes first freeze the next version.

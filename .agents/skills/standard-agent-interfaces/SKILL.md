@@ -11,16 +11,12 @@ Binding company standard. The rules below are the summary; the linked file is au
 
 ## Agent-native product interfaces
 
-Products that expose consequential operations to agents keep probabilistic
-reasoning (goals, synthesis, proposals) apart from deterministic mechanisms
-(validation, authority, mutation, recovery, evidence). MCP and CLI are
-equivalent adapters over one *Hexagonal Architecture* core; the CLI stays a
-complete recovery path. Tools have strict versioned schemas, no arbitrary
-shell, typed results and safe next actions. Natural language, model
-confidence, and client confirmation are never identity or approval;
-self-approval is denied and secrets never appear in tool output. Mutations are
-idempotent or carry a durable operation id and report partial failure
-explicitly.
+Keep probabilistic reasoning apart from deterministic validation, authority,
+mutation, recovery, and evidence. MCP and CLI are peer adapters over one
+*Hexagonal Architecture* core; the CLI is a full recovery path. Tools: strict
+versioned schemas, no shell, typed results, safe next actions. Language, model
+confidence, client confirmation: never identity or approval; no self-approval
+or secrets in output. Mutations idempotent or durable; partial failure reported.
 
 Full standard: `standards/agent-native-product-interfaces.md`. Sections:
 
