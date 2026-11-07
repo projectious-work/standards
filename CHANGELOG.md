@@ -6,6 +6,38 @@ All notable changes to the standards are listed here. The format follows
 
 ## [Unreleased]
 
+### Added
+
+- `standards/agent-building.md`: agent definitions state job, persona as Big
+  Five (OCEAN) levels with a company default profile, instructions, tools,
+  model, and evaluation; design with DMADV, SOTA check, control-chart evals.
+- `standards/agent-use.md`: what to delegate (Value Stream Mapping), open
+  work (GTD), knowledge and memory (BASB), improvement (PDCA), adoption (Team
+  Topologies, Kotter).
+- `standards/user-interface-design.md`: Dieter Rams, Progressive Disclosure,
+  Apple HIG, Adobe Spectrum as behavior reference, Bringhurst typography,
+  accessibility for all interfaces.
+- `standards/command-line-interface-design.md`: a shared CLI baseline and
+  three command-grammar styles to choose from per CLI (Unix utility,
+  verb–resource as in kubectl, object–action as in OpenStackClient), recorded
+  in an ADR; part of the `standard-application-engineering` skill.
+- Skills `standard-agent-building`, `standard-agent-use`, `standard-ui-design`;
+  application profile "AI agent".
+- Semantic Anchors applied across the standards: KISS, YAGNI, Deep Modules,
+  Conway's Law, DRY, CUPID, GoF, Design by Contract, Defensive Programming,
+  ISO/IEC 25010, SOTA (architecture); Chesterton's Fence (refactoring);
+  50/72 Rule (commits, titles up to 72 characters); OWASP Top 10 (security);
+  Plain Language, ASD-STE100, Progressive Disclosure, MECE (documentation);
+  Pyramid Principle, MECE, GTD, Plain Language (communication); Unix
+  Philosophy (CLI design); Laddering, MECE tasks, ISO/IEC 25010, PDCA
+  (spec-driven cycle).
+
+### Changed
+
+- Semantic Anchors catalog pin moved to `6554641a` (2026-11-06); anchor names
+  aligned with catalog titles (SOLID Principles, Test Double (Meszaros),
+  Domain-Driven Design according to Evans).
+
 ## [2.1.0] - 2026-11-07
 
 ### Changed

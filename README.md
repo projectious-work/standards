@@ -14,10 +14,11 @@ them to AI coding agents (Claude Code, Codex, and any harness that reads
 | `standards/sources/` | Third-party material that standards adapt, kept unmodified. |
 | `scripts/standards.py` | Installs, regenerates, and checks the standards in a repository. |
 
-The standards cover agent communication and execution budget, Git branching
-(*GitHub Flow*) and releases, specification layout and spec-driven
-development, architecture and refactoring, application engineering (*Twelve-Factor App* alignment), agent
-interfaces, security, public documentation, and roadmaps.
+The standards cover agent communication, execution budget, building, and use;
+Git branching (*GitHub Flow*) and releases; specification layout and
+spec-driven development; architecture and refactoring; application
+engineering (*Twelve-Factor App* alignment, CLI design); agent interfaces; security;
+public documentation; user-interface design; and roadmaps.
 
 ## How agents receive them
 
@@ -35,7 +36,7 @@ Each standard loads in three levels so only what a task needs enters context:
 From a clean checkout of a release tag:
 
 ```sh
-git clone --branch v1.0.0 https://github.com/projectious-work/standards /tmp/standards
+git clone --branch <tag> https://github.com/projectious-work/standards /tmp/standards
 python3 /tmp/standards/scripts/standards.py install /path/to/repo
 ```
 

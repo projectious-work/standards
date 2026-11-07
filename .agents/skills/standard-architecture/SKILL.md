@@ -11,12 +11,12 @@ Binding company standard. The rules below are the summary; the linked file is au
 
 ## Software architecture and code design standard
 
-Keep the core free of infrastructure: ports in the core, adapters at the
-edge, dependencies inward (*Hexagonal Architecture*); business rules in
-entities and use cases (*Clean Architecture*); feature modules own their
-data and talk only through module APIs. The repository's formatter and
-linter decide style. Document with *arc42*, *C4-Diagrams*, and *ADR
-according to Nygard*.
+Ports in the core, adapters at the edge, dependencies inward (*Hexagonal
+Architecture*); rules in entities and use cases (*Clean Architecture*);
+feature *Deep Modules* own their data and talk only through module APIs.
+*KISS Principle*, *YAGNI*; *Design by Contract* inside, defensive checks at
+trust boundaries. The formatter and linter decide style. Document with
+*arc42*, *C4-Diagrams*, and *ADR according to Nygard*.
 
 Full standard: `standards/software-architecture-and-code-design.md`. Sections:
 
