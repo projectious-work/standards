@@ -11,12 +11,12 @@ Binding company standard. The rules below are the summary; the linked file is au
 
 ## Agent use standard
 
-Map the workflow (*Value Stream Mapping*) before delegating; smallest setup
-(*KISS Principle*); people keep approvals, releases, and sending. Batch runs:
-questions first, resumable progress, every item a category and action,
-escalations as one batch. Simulated personas are labelled and never replace
-real evidence. Open work per *GTD*; knowledge per *BASB*; improve per *PDCA*;
-adopt with *Team Topologies* and *Kotter's 8-Step Change Model*.
+Map work (*Value Stream Mapping*); smallest setup (*KISS Principle*). Agents
+draft, people send, unless authority grants a bounded message class. Batch
+runs: plan questions first, resumable progress, a category and action per
+item, escalations as one batch. Simulated personas: labelled, never evidence.
+Open work per *GTD*; knowledge per *BASB*; improve per *PDCA*; adopt with
+*Team Topologies* and *Kotter's 8-Step Change Model*.
 
 Full standard: `standards/agent-use.md`. Sections:
 

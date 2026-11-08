@@ -30,11 +30,15 @@ Every agent definition states, in one reviewable place:
 - **Instructions:** as defined under [Instructions](#instructions).
 - **Tools:** the smallest tool set the job needs, each with its contract.
 - **Authority:** what the agent may do without approval. Everything else
-  needs approval.
+  needs approval, given by a person through the mechanism the
+  [agent-native standard](agent-native-product-interfaces.md) defines, never
+  by the agent itself.
 - **Examples:** for style-sensitive results, two or three real examples of
   the expected output.
 - **Model:** the model class and the reason for it.
 - **Evaluation:** the cases and the metric that show the agent does its job.
+- **Review cadence:** how often the agent's results are reviewed (see
+  [Design and evaluation](#design-and-evaluation)).
 
 ## Persona
 
@@ -45,9 +49,10 @@ communication standard, or tool authority, and an agent never claims to be
 human.
 
 An agent MAY have a name. The name follows the role ("Copywriter Carl",
-`copywriter-carl`), so the role stays visible. Every message that an agent
-sends or drafts for people outside the company states that it comes from an
-AI.
+`copywriter-carl`), so the role stays visible, and the agent is identifiable
+as an AI wherever its name is shown. A message an agent sends to people
+outside the company states that it comes from an AI. A draft carries an
+AI-origin note; the person who sends the draft decides whether to keep it.
 
 Company default, used unless the agent definition states and justifies a
 deviation:
@@ -72,9 +77,10 @@ deviation:
 - Instructions follow the
   [documentation writing rules](open-source-documentation-strategy.md#quality-accessibility-and-maintenance)
   for agent instructions (*Simplified Technical English (ASD-STE100)*).
-- Instructions state the real stakes once, as context. They contain no
-  emotional appeals, promised rewards, or invented urgency, and give
-  reasoning models goals and checks instead of scripted reasoning steps.
+- Instructions state the stakes of the job in one sentence of context. They
+  contain no praise, threats, rewards, penalties, or urgency wording for
+  emphasis. For reasoning models they give goals and checks instead of
+  scripted reasoning steps.
 - Secrets and personal data follow the
   [security standard](security-and-software-supply-chain.md#secrets-and-sensitive-data);
   run-time content is handled as the
@@ -89,7 +95,6 @@ deviation:
 - A skill declares its required and optional inputs and its output format.
 - Reference material (guidelines, examples, templates) lives in the skill's
   `references/` directory, and the skill states when to load each file.
-  Material shared by several skills exists once and is referenced.
 - A skill that consumes another skill's output names that skill by its
   function, not by a persona name.
 
@@ -121,16 +126,17 @@ deviation:
   improvement, never in reaction to a single run inside the control limits.
 - Every change to an agent definition reruns its evaluation and is reviewed
   like code.
-- Every agent in regular use has a review session at the cadence its
-  definition states. The person responsible and the agent go through recent
-  results; the session ends with a minimal change to the definition, proposed
-  as a diff, which the person approves or rejects.
+- Every agent that runs in production or at least monthly has a review
+  session at its review cadence, at least quarterly. The person responsible
+  and the agent go through recent results. The session ends with a change to
+  the definition, limited to the findings and proposed as a diff, which the
+  person approves or rejects.
 
 ## Agent briefing
 
-> An agent definition states job (*Unix Philosophy*), context, *Big Five
-> (OCEAN) Personality Traits* persona (default O medium, C high, E low, A
-> medium, N low), instructions, tools, authority, model, examples, evaluation.
-> Names follow the role; external messages disclose AI. Skills: frontmatter
-> with when and when not, declared inputs and outputs, `references/` loaded on
-> need. No emotional appeals. *DMADV*, *SOTA*, *Control Chart*, review diffs.
+> Definition: job (*Unix Philosophy*), context, *Big Five (OCEAN) Personality
+> Traits* persona (default O medium, C high, E low, A medium, N low), tools,
+> authority (rest needs a person's approval), model, examples, evaluation,
+> review cadence. Names show role and AI. Skills: when and when not, inputs,
+> outputs, `references/` on need. No praise, threats, rewards, or urgency.
+> *DMADV*, *SOTA*, *Control Chart*; quarterly reviews end in an approved diff.

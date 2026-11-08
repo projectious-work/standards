@@ -54,9 +54,9 @@ operation, meaning independent of color, and `NO_COLOR` support.
 
 ## Agent briefing
 
-> Review designs against *Dieter Rams' 10 Principles of Good Design*; show the
-> primary task first (*Progressive Disclosure*), never hide risk or errors.
-> Apple platforms: *Apple Human Interface Guidelines*; other GUIs: *Adobe
-> Spectrum* behavior where the brand is silent. Long-form text per
+> The brand repository's released contract wins; never restate it. Review with
+> *Dieter Rams' 10 Principles of Good Design*; primary task first (*Progressive
+> Disclosure*), never hide risk or errors. Apple: *Apple Human Interface
+> Guidelines*; other GUIs: *Adobe Spectrum* behavior. Long-form text per
 > *Bringhurst*. GUIs: keyboard, focus, contrast, text alternatives, reduced
 > motion; terminals: 80 columns, never color alone, `NO_COLOR`.

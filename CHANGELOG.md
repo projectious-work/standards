@@ -13,11 +13,13 @@ All notable changes to the standards are listed here. The format follows
   instructions carry no emotional appeals, rewards, or invented urgency;
   skill authoring rules (frontmatter with when and when not, declared inputs
   and outputs, `references/` loaded on need, function-named chaining);
-  regular review sessions that end in an approved definition diff.
-- Agent use: agents draft but never send outward-facing text; batch-run rules
-  (questions first, resumable progress, category with action per item,
-  escalations as one batch); simulated customer personas are labelled and
-  never replace real evidence.
+  review cadence (at least quarterly) with sessions that end in an approved
+  definition diff.
+- Agent use: agents draft outward-facing text for a person to send, unless
+  their authority grants a bounded message class; batch-run rules (plan
+  questions first, resumable progress, category with action per item,
+  escalations as one batch); simulated personas are labelled and never count
+  as evidence.
 
 ### Changed
 

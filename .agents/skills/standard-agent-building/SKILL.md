@@ -11,12 +11,12 @@ Binding company standard. The rules below are the summary; the linked file is au
 
 ## Agent building standard
 
-An agent definition states job (*Unix Philosophy*), context, *Big Five
-(OCEAN) Personality Traits* persona (default O medium, C high, E low, A
-medium, N low), instructions, tools, authority, model, examples, evaluation.
-Names follow the role; external messages disclose AI. Skills: frontmatter
-with when and when not, declared inputs and outputs, `references/` loaded on
-need. No emotional appeals. *DMADV*, *SOTA*, *Control Chart*, review diffs.
+Definition: job (*Unix Philosophy*), context, *Big Five (OCEAN) Personality
+Traits* persona (default O medium, C high, E low, A medium, N low), tools,
+authority (rest needs a person's approval), model, examples, evaluation,
+review cadence. Names show role and AI. Skills: when and when not, inputs,
+outputs, `references/` on need. No praise, threats, rewards, or urgency.
+*DMADV*, *SOTA*, *Control Chart*; quarterly reviews end in an approved diff.
 
 Full standard: `standards/agent-building.md`. Sections:
 
