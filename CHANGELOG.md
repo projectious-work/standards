@@ -6,6 +6,8 @@ All notable changes to the standards are listed here. The format follows
 
 ## [Unreleased]
 
+## [2.3.0] - 2026-11-08
+
 ### Added
 
 - Agent building: definitions add context, authority, and output examples;
