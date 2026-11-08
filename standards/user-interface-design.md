@@ -5,8 +5,12 @@
 This standard defines how projectious.work products look and behave for the
 people who use them. It applies to graphical user interfaces, terminal user
 interfaces, human-readable CLI output, documentation sites, and websites.
-Brand identity (logo, colors, typefaces, voice) comes from the company brand
-repository; this standard governs how it is applied.
+Brand identity (logo, colors, typefaces, voice, imagery) comes from the
+[brand repository](https://github.com/projectious-work/brand), which is
+authoritative: its released brand contract (documentation, structured data,
+generated tokens, and brand MCP server) wins over any other source. Standards
+and skills reference it and never restate brand values. This standard governs
+only how the brand is applied in interfaces.
 
 Terms in *italics* are [Semantic Anchors](https://github.com/llm-coding/Semantic-Anchors/tree/6554641a11fdf99fdbdf09cc0602268e3db88966); see
 [README](README.md#conventions).
@@ -50,9 +54,9 @@ operation, meaning independent of color, and `NO_COLOR` support.
 
 ## Agent briefing
 
-> Review designs against *Dieter Rams' 10 Principles of Good Design*; show the
-> primary task first (*Progressive Disclosure*), never hide risk or errors.
-> Apple platforms: *Apple Human Interface Guidelines*; other GUIs: *Adobe
-> Spectrum* behavior where the brand is silent. Long-form text per
+> The brand repository's released contract wins; never restate it. Review with
+> *Dieter Rams' 10 Principles of Good Design*; primary task first (*Progressive
+> Disclosure*), never hide risk or errors. Apple: *Apple Human Interface
+> Guidelines*; other GUIs: *Adobe Spectrum* behavior. Long-form text per
 > *Bringhurst*. GUIs: keyboard, focus, contrast, text alternatives, reduced
 > motion; terminals: 80 columns, never color alone, `NO_COLOR`.

@@ -6,6 +6,26 @@ All notable changes to the standards are listed here. The format follows
 
 ## [Unreleased]
 
+### Added
+
+- Agent building: definitions add context, authority, and output examples;
+  named agents keep their role visible and disclose AI in external messages;
+  instructions carry no emotional appeals, rewards, or invented urgency;
+  skill authoring rules (frontmatter with when and when not, declared inputs
+  and outputs, `references/` loaded on need, function-named chaining);
+  review cadence (at least quarterly) with sessions that end in an approved
+  definition diff.
+- Agent use: agents draft outward-facing text for a person to send, unless
+  their authority grants a bounded message class; batch-run rules (plan
+  questions first, resumable progress, category with action per item,
+  escalations as one batch); simulated personas are labelled and never count
+  as evidence.
+
+### Changed
+
+- User-interface design: the brand repository's released brand contract is
+  authoritative; standards and skills never restate brand values.
+
 ## [2.2.0] - 2026-11-08
 
 ### Added

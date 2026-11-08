@@ -25,10 +25,20 @@ Every agent definition states, in one reviewable place:
 - **Persona:** the target level (low, medium, or high) of each of the *Big
   Five (OCEAN) Personality Traits*, with one line on the observable behavior
   each level means for this job.
+- **Context:** whom the agent works for, its team, and the audience of its
+  results.
 - **Instructions:** as defined under [Instructions](#instructions).
 - **Tools:** the smallest tool set the job needs, each with its contract.
+- **Authority:** what the agent may do without approval. Everything else
+  needs approval, given by a person through the mechanism the
+  [agent-native standard](agent-native-product-interfaces.md) defines, never
+  by the agent itself.
+- **Examples:** for style-sensitive results, two or three real examples of
+  the expected output.
 - **Model:** the model class and the reason for it.
 - **Evaluation:** the cases and the metric that show the agent does its job.
+- **Review cadence:** how often the agent's results are reviewed (see
+  [Design and evaluation](#design-and-evaluation)).
 
 ## Persona
 
@@ -37,6 +47,12 @@ observable agent behavior, not a claim that an agent has a personality. A
 persona never overrides safety, confirmation of outward-facing actions, the
 communication standard, or tool authority, and an agent never claims to be
 human.
+
+An agent MAY have a name. The name follows the role ("Copywriter Carl",
+`copywriter-carl`), so the role stays visible, and the agent is identifiable
+as an AI wherever its name is shown. A message an agent sends to people
+outside the company states that it comes from an AI. A draft carries an
+AI-origin note; the person who sends the draft decides whether to keep it.
 
 Company default, used unless the agent definition states and justifies a
 deviation:
@@ -61,11 +77,26 @@ deviation:
 - Instructions follow the
   [documentation writing rules](open-source-documentation-strategy.md#quality-accessibility-and-maintenance)
   for agent instructions (*Simplified Technical English (ASD-STE100)*).
+- Instructions state the stakes of the job in one sentence of context. They
+  contain no praise, threats, rewards, penalties, or urgency wording for
+  emphasis. For reasoning models they give goals and checks instead of
+  scripted reasoning steps.
 - Secrets and personal data follow the
   [security standard](security-and-software-supply-chain.md#secrets-and-sensitive-data);
   run-time content is handled as the
   [agent-native standard](agent-native-product-interfaces.md) defines for
   prompt and tool injection.
+
+## Skills
+
+- A skill starts with frontmatter: `name`, and a `description` that states
+  what the skill does, when to use it, and when not to use it. The
+  description is the always-on part, so it stays short.
+- A skill declares its required and optional inputs and its output format.
+- Reference material (guidelines, examples, templates) lives in the skill's
+  `references/` directory, and the skill states when to load each file.
+- A skill that consumes another skill's output names that skill by its
+  function, not by a persona name.
 
 ## Tools and topology
 
@@ -95,12 +126,17 @@ deviation:
   improvement, never in reaction to a single run inside the control limits.
 - Every change to an agent definition reruns its evaluation and is reviewed
   like code.
+- Every agent that runs in production or at least monthly has a review
+  session at its review cadence, at least quarterly. The person responsible
+  and the agent go through recent results. The session ends with a change to
+  the definition, limited to the findings and proposed as a diff, which the
+  person approves or rejects.
 
 ## Agent briefing
 
-> Every agent definition states one job (*Unix Philosophy*), a persona as
-> *Big Five (OCEAN) Personality Traits* levels (default: O medium, C high,
-> E low, A medium, N low; never overrides safety), instructions, tools with
-> contracts (*Design by Contract*), model, and evaluation. Instructions load
-> by *Progressive Disclosure*, are *MECE Principle*, and use *ASD-STE100*
-> rules. Design with *DMADV*, check *SOTA*, track evals on a *Control Chart*.
+> Definition: job (*Unix Philosophy*), context, *Big Five (OCEAN) Personality
+> Traits* persona (default O medium, C high, E low, A medium, N low), tools,
+> authority (rest needs a person's approval), model, examples, evaluation,
+> review cadence. Names show role and AI. Skills: when and when not, inputs,
+> outputs, `references/` on need. No praise, threats, rewards, or urgency.
+> *DMADV*, *SOTA*, *Control Chart*; quarterly reviews end in an approved diff.

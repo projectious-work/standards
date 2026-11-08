@@ -22,7 +22,35 @@ Terms in *italics* are [Semantic Anchors](https://github.com/llm-coding/Semantic
 - Use the smallest setup that does the job (*KISS Principle*): one agent
   before several, an existing skill before a new agent.
 - People keep the decisions the standards reserve for them: approvals,
-  releases, and outward-facing actions.
+  releases, and outward-facing actions
+  ([agent communication](agent-communication.md#precedence)). Agents draft
+  outward-facing text for a person to send, unless the agent definition's
+  authority grants sending for a named, bounded class of messages.
+
+## Batch work
+
+When an agent works through many items (tickets, records, documents):
+
+- Before the run, it asks the questions that change the plan, as the
+  [agent communication standard](agent-communication.md) allows. Ambiguity
+  found during the run goes into the end-of-run batch, except where an item
+  needs confirmation of a destructive or outward-facing action: that item
+  waits, the others continue.
+- It keeps a progress record in the tracker or in a file the run names, so an
+  interrupted run resumes where it stopped.
+- It classifies each item into a fixed set of categories, and each category
+  has a defined action. No item is closed without its action. An item that
+  fits several categories takes the one whose action needs more human
+  involvement.
+- It collects items that need a person, with the reason for each, and hands
+  them over as one batch at the end of the run.
+
+## Simulated reviewers
+
+A simulated customer or user persona MAY review drafts as an evaluation step.
+Its results are labelled as simulated, never replace evidence from real
+customers or users, and never count as evidence in an evaluation score. The persona is an agent and follows the
+[agent building standard](agent-building.md).
 
 ## Open work
 
@@ -72,9 +100,9 @@ not instruction. A memory that turns out to be wrong is corrected or deleted.
 
 ## Agent briefing
 
-> Map the workflow (*Value Stream Mapping*) before delegating; use the smallest
-> agent setup (*KISS Principle*); people keep approvals and releases. Open
-> work per *GTD*: capture in the tracker, one next action and owner, weekly
-> review. Knowledge per *BASB*; memory holds distilled facts, never repo
-> content. Improve in *PDCA* cycles. Adopt with *Team Topologies* and
-> *Kotter's 8-Step Change Model*.
+> Map work (*Value Stream Mapping*); smallest setup (*KISS Principle*). Agents
+> draft, people send, unless authority grants a bounded message class. Batch
+> runs: plan questions first, resumable progress, a category and action per
+> item, escalations as one batch. Simulated personas: labelled, never evidence.
+> Open work per *GTD*; knowledge per *BASB*; improve per *PDCA*; adopt with
+> *Team Topologies* and *Kotter's 8-Step Change Model*.

@@ -11,12 +11,12 @@ Binding company standard. The rules below are the summary; the linked file is au
 
 ## Agent building standard
 
-Every agent definition states one job (*Unix Philosophy*), a persona as
-*Big Five (OCEAN) Personality Traits* levels (default: O medium, C high,
-E low, A medium, N low; never overrides safety), instructions, tools with
-contracts (*Design by Contract*), model, and evaluation. Instructions load
-by *Progressive Disclosure*, are *MECE Principle*, and use *ASD-STE100*
-rules. Design with *DMADV*, check *SOTA*, track evals on a *Control Chart*.
+Definition: job (*Unix Philosophy*), context, *Big Five (OCEAN) Personality
+Traits* persona (default O medium, C high, E low, A medium, N low), tools,
+authority (rest needs a person's approval), model, examples, evaluation,
+review cadence. Names show role and AI. Skills: when and when not, inputs,
+outputs, `references/` on need. No praise, threats, rewards, or urgency.
+*DMADV*, *SOTA*, *Control Chart*; quarterly reviews end in an approved diff.
 
 Full standard: `standards/agent-building.md`. Sections:
 
@@ -24,5 +24,6 @@ Full standard: `standards/agent-building.md`. Sections:
 - Agent definition
 - Persona
 - Instructions
+- Skills
 - Tools and topology
 - Design and evaluation
