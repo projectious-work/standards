@@ -6,6 +6,8 @@ All notable changes to the standards are listed here. The format follows
 
 ## [Unreleased]
 
+## [2.2.0] - 2026-11-08
+
 ### Added
 
 - `standards/agent-building.md`: agent definitions state job, persona as Big
