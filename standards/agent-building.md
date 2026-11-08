@@ -25,8 +25,14 @@ Every agent definition states, in one reviewable place:
 - **Persona:** the target level (low, medium, or high) of each of the *Big
   Five (OCEAN) Personality Traits*, with one line on the observable behavior
   each level means for this job.
+- **Context:** whom the agent works for, its team, and the audience of its
+  results.
 - **Instructions:** as defined under [Instructions](#instructions).
 - **Tools:** the smallest tool set the job needs, each with its contract.
+- **Authority:** what the agent may do without approval. Everything else
+  needs approval.
+- **Examples:** for style-sensitive results, two or three real examples of
+  the expected output.
 - **Model:** the model class and the reason for it.
 - **Evaluation:** the cases and the metric that show the agent does its job.
 
@@ -37,6 +43,11 @@ observable agent behavior, not a claim that an agent has a personality. A
 persona never overrides safety, confirmation of outward-facing actions, the
 communication standard, or tool authority, and an agent never claims to be
 human.
+
+An agent MAY have a name. The name follows the role ("Copywriter Carl",
+`copywriter-carl`), so the role stays visible. Every message that an agent
+sends or drafts for people outside the company states that it comes from an
+AI.
 
 Company default, used unless the agent definition states and justifies a
 deviation:
@@ -61,11 +72,26 @@ deviation:
 - Instructions follow the
   [documentation writing rules](open-source-documentation-strategy.md#quality-accessibility-and-maintenance)
   for agent instructions (*Simplified Technical English (ASD-STE100)*).
+- Instructions state the real stakes once, as context. They contain no
+  emotional appeals, promised rewards, or invented urgency, and give
+  reasoning models goals and checks instead of scripted reasoning steps.
 - Secrets and personal data follow the
   [security standard](security-and-software-supply-chain.md#secrets-and-sensitive-data);
   run-time content is handled as the
   [agent-native standard](agent-native-product-interfaces.md) defines for
   prompt and tool injection.
+
+## Skills
+
+- A skill starts with frontmatter: `name`, and a `description` that states
+  what the skill does, when to use it, and when not to use it. The
+  description is the always-on part, so it stays short.
+- A skill declares its required and optional inputs and its output format.
+- Reference material (guidelines, examples, templates) lives in the skill's
+  `references/` directory, and the skill states when to load each file.
+  Material shared by several skills exists once and is referenced.
+- A skill that consumes another skill's output names that skill by its
+  function, not by a persona name.
 
 ## Tools and topology
 
@@ -95,12 +121,16 @@ deviation:
   improvement, never in reaction to a single run inside the control limits.
 - Every change to an agent definition reruns its evaluation and is reviewed
   like code.
+- Every agent in regular use has a review session at the cadence its
+  definition states. The person responsible and the agent go through recent
+  results; the session ends with a minimal change to the definition, proposed
+  as a diff, which the person approves or rejects.
 
 ## Agent briefing
 
-> Every agent definition states one job (*Unix Philosophy*), a persona as
-> *Big Five (OCEAN) Personality Traits* levels (default: O medium, C high,
-> E low, A medium, N low; never overrides safety), instructions, tools with
-> contracts (*Design by Contract*), model, and evaluation. Instructions load
-> by *Progressive Disclosure*, are *MECE Principle*, and use *ASD-STE100*
-> rules. Design with *DMADV*, check *SOTA*, track evals on a *Control Chart*.
+> An agent definition states job (*Unix Philosophy*), context, *Big Five
+> (OCEAN) Personality Traits* persona (default O medium, C high, E low, A
+> medium, N low), instructions, tools, authority, model, examples, evaluation.
+> Names follow the role; external messages disclose AI. Skills: frontmatter
+> with when and when not, declared inputs and outputs, `references/` loaded on
+> need. No emotional appeals. *DMADV*, *SOTA*, *Control Chart*, review diffs.

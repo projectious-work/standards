@@ -22,7 +22,27 @@ Terms in *italics* are [Semantic Anchors](https://github.com/llm-coding/Semantic
 - Use the smallest setup that does the job (*KISS Principle*): one agent
   before several, an existing skill before a new agent.
 - People keep the decisions the standards reserve for them: approvals,
-  releases, and outward-facing actions.
+  releases, and outward-facing actions. Agents draft outward-facing text
+  (emails, posts, replies) but never send or publish it.
+
+## Batch work
+
+When an agent works through many items (tickets, records, documents):
+
+- It asks its clarifying questions before the run starts.
+- It keeps a progress record, so an interrupted run resumes where it stopped.
+- It classifies each item into a fixed set of categories, and each category
+  has a defined action. No item is closed without its action. An item that
+  fits several categories takes the one with the stricter action.
+- It collects items that need a person, with the reason for each, and hands
+  them over as one batch at the end of the run.
+
+## Simulated reviewers
+
+A simulated customer or user persona MAY review drafts as an evaluation step.
+Its results are labelled as simulated and never replace evidence from real
+customers or users. The persona is an agent and follows the
+[agent building standard](agent-building.md).
 
 ## Open work
 
@@ -72,9 +92,9 @@ not instruction. A memory that turns out to be wrong is corrected or deleted.
 
 ## Agent briefing
 
-> Map the workflow (*Value Stream Mapping*) before delegating; use the smallest
-> agent setup (*KISS Principle*); people keep approvals and releases. Open
-> work per *GTD*: capture in the tracker, one next action and owner, weekly
-> review. Knowledge per *BASB*; memory holds distilled facts, never repo
-> content. Improve in *PDCA* cycles. Adopt with *Team Topologies* and
-> *Kotter's 8-Step Change Model*.
+> Map the workflow (*Value Stream Mapping*) before delegating; smallest setup
+> (*KISS Principle*); people keep approvals, releases, and sending. Batch runs:
+> questions first, resumable progress, every item a category and action,
+> escalations as one batch. Simulated personas are labelled and never replace
+> real evidence. Open work per *GTD*; knowledge per *BASB*; improve per *PDCA*;
+> adopt with *Team Topologies* and *Kotter's 8-Step Change Model*.
